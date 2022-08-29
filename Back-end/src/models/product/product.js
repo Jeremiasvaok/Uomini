@@ -1,7 +1,18 @@
-const {Schema} = require('mongoose')
+const {Schema, model} = require('mongoose')
 
-new Schema({
-    name: String,
-    description : String,
-    price: Number
+const productSchema = new Schema({
+    name: {
+        type:String,
+        unique:true, //el numbre tiene que ser unico
+        required:true // es requerido
+    },
+    description: {
+        type:String,
+    },
+    price:{
+        type:Number,
+        default: 0 // si no pasan un precio por defecto es 0
+    }
 })
+
+module.exports = model('product', productSchema)

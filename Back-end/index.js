@@ -1,13 +1,28 @@
-const mongoose = require('mongoose');
-const uri = 'mongodb://localhost:27017/E-Commerce'
-main().catch(err => console.log(err));
+// const product = require('./src/models/product/product')
+const  express = require('express')
+ 
 
-async function main() {
-  mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-}
-mongoose.connection.once('open',_ =>{ //el evento once se ejecuta una sola vez, cuando se conecta la base de datos
-    console.log('%Database is connected to', uri,'%')
-});
+const app = express()
+
+app.get('/', (req,res )=>{
+   res.send('hello')
+})
+
+app.listen(3001,()=>{
+    console.log("%escuchando el puerto 3000%")
+})
+
+// require('./mongo.js')
+
+// async function main(){
+//     const products = new product({
+//         name:"buzo",
+//         description:"buzo rojo",
+//         price: 2400
+//     })
+//     const productss = await products.save()
+//     return productss
+// }
+// main()
+//     .then(productoSave => console.log(productoSave))
+//     .catch(error => console.log(error))
