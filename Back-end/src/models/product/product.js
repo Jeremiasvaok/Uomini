@@ -8,11 +8,29 @@ const productSchema = new Schema({
     },
     description: {
         type:String,
+        required:true
     },
     price:{
         type:Number,
-        default: 0 // si no pasan un precio por defecto es 0
-    }
+        required:true
+    }, 
+     image:{
+        type: String,
+        unique:true,
+        required:true
+     },
+     category:{
+        type: Array,
+        required:true
+     },
+     count:{
+        type:Number,
+        require:true
+     },
+     color:{
+        type:Array,
+        required:true
+     }
 })
 
 module.exports = model('product', productSchema)
