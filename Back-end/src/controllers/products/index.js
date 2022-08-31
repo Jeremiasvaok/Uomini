@@ -23,6 +23,20 @@ module.exports ={
       }
     },
 
+      getProduct: async (req,res)=>{
+        try {
+          const id = req.params.id
+          if(id){
+          const product = Products.findById(id)
+          return res.status(200).send(product)
+          }else{
+            return res.status(404).send('Producto no encontrado')
+          }
+        } catch (error) {
+          return res.status(500).send(error)
+        }
+       },
+
      queryAllProducts: async (req,res)=>{
        try {
         const find = await Products.find()
@@ -93,6 +107,7 @@ module.exports ={
         })
     }
 },
+
   updateProduct: async (req,res)=>{
     try {
       const {name, description, price, image, category, count, color} = req.body
@@ -131,8 +146,8 @@ module.exports ={
     try {
       const {id}= req.params
       if(id){
-       const delete = await Products.findByIdAndDelete(id);
-       res.json({msg:'Producto eliminado', delete})
+       const deletee = await Products.findByIdAndDelete(id);
+       res.json({msg:'Producto eliminado', deletee})
       }else{
        return res.status(404).send('No se puede completar la solicitud')
       }
