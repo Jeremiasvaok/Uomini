@@ -3,7 +3,6 @@ const {Schema, model} = require('mongoose')
 const productSchema = new Schema({
     name: {
         type:String,
-        unique:true, //el numbre tiene que ser unico
         required:true // es requerido
     },
     description: {
@@ -20,7 +19,7 @@ const productSchema = new Schema({
         required:true
      },
      category:{
-            categorys:{
+        categories:{
                 type: String,
                 required:true
             }
