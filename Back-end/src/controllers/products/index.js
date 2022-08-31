@@ -128,7 +128,17 @@ module.exports ={
   },
    
   deleteProducts: async (req, res)=>{
-
+    try {
+      const {id}= req.params
+      if(id){
+       const delete = await Products.findByIdAndDelete(id);
+       res.json({msg:'Producto eliminado', delete})
+      }else{
+       return res.status(404).send('No se puede completar la solicitud')
+      }
+    } catch (error) {
+      return res.status(500).send(error)
+    }
   },
 
 }

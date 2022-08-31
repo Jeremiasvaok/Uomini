@@ -8,7 +8,7 @@ const {
     deleteProducts,
 } = require('../controllers/products')
 
-/**************************************************  RUTAS PRODUCTOS  **************************************************/
+/************************************************** |RUTAS DE PRODUCTOS| **************************************************/
 routes.get('/products', getAllProducts)
 routes.get('/category-products', queryAllProducts)
 routes.post('/create-products', postProducts)
