@@ -20,17 +20,21 @@ const productSchema = new Schema({
         required:true
      },
      category:{
-        type: Array,
-        required:true
-     },
+            categorys:{
+                type: String,
+                required:true
+            }
+        },
      count:{
         type:Number,
         require:true
      },
      color:{
-        type:Array,
-        required:true
-     }
+        colors:{
+            type: String,
+            required:true,
+        }
+    }
 })
 
 module.exports = model('product', productSchema)

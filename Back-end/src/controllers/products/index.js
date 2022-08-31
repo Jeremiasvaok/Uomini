@@ -11,7 +11,7 @@ module.exports ={
               description: p.description,
               price: p.price,
               image: p.image,
-              category: p.category[0][1],
+              category: p.category.categorys.split(',')[0] && p.category.categorys[1],
               color: p.color
            }
         })
@@ -20,6 +20,34 @@ module.exports ={
         //return res.status(500).json({massage: error})
       }
     },
+    //  queryAllProducts: async (req,res)=>{
+    //    try {
+    //     const{name, category} = req.query
+    //     const find = await Products.find()
+    //     const findMap = fiand.map((p)=>{
+    //       return{
+    //         id: p._id,
+    //         name: p.name,
+    //         description: p.description,
+    //         price: p.price,
+    //         image: p.image,
+    //         category: p.category,
+    //         color: p.color
+    //      }
+    //     })
+    //     //  if(!name && !invierno && !primavera && !verano && !otoño){
+    //     //   return res.status(404).send('Producto no encontrado')
+    //      if(name){
+    //        const info = findMap.find((d)=>d.name.toLowerCase().includes(name.toLowerCase()))
+    //      }
+    //      else if(category){
+    //       const info = findMap.find((d)=>d.name.toLowerCase().includes(category.toLowerCase()))
+    //      }
+    //      return res.status(200).send(info)
+    //    } catch (error) {
+        
+    //    }
+    //  },
 
 
     postProducts:async (req,res)=>{
