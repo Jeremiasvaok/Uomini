@@ -7,16 +7,18 @@ const {
     updateProduct,
     deleteProducts,
     getProduct,
-    orderPrice,
-    orderColor
+    orderByPrice,
+    orderByColor,
+    orderByCategory
 } = require('../controllers/products')
 
-/************************************************** |RUTAS DE PRODUCTOS| **************************************************/
+/************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
 routes.get('/products', getAllProducts)
 routes.get('/product/:id', getProduct)
 routes.get('/category-products', queryAllProducts)
-routes.get('/order', orderPrice)
-routes.get('/order-color', orderColor)
+routes.get('/order', orderByPrice)
+routes.get('/order-color', orderByColor)
+routes.get('/order-category', orderByCategory)
 routes.post('/create-products', postProducts)
 routes.put('/update-products/:id', updateProduct)
 routes.delete('/delete-products/:id',deleteProducts)

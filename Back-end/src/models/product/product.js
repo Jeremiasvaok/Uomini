@@ -27,12 +27,11 @@ const productSchema = new Schema({
      count:{
         type:Number,
         require:true
+
      },
      color:{
-        colors:{
-            type: String,
+            type: Array ,
             required:true,
-        }
     }
 })
 

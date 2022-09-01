@@ -14,7 +14,7 @@ module.exports ={
               image: p.image,
               category: p.category.categories,
               count: p.count,
-              color: p.color.colors
+              color: p.color
            }
         })
        return res.status(200).send(findMap)
@@ -49,7 +49,7 @@ module.exports ={
             image: p.image,
             category: p.category.categories,
             count: p.count,
-            color: p.color.colors
+            color: p.color
          }
         })
         const{name} = req.query
@@ -156,7 +156,7 @@ module.exports ={
     }
   },
   
-    orderPrice: async (req,res)=>{
+    orderByPrice: async (req,res)=>{
       try {
         const {numero} = req.body
         if(numero){
@@ -174,7 +174,7 @@ module.exports ={
             image: p.image,
             category: p.category.categories,
             count: p.count,
-            color: p.color.colors
+            color: p.color
           }
         })
         map.length ? res.status(200).send(map) :
@@ -183,25 +183,69 @@ module.exports ={
      return res.status(404).send("Producto no encontrado con esas especificaciones")
       }
       } catch (error) {
-        console.log(error)
+        return res.status(500).send(error)
       }
     },
 
-    orderColor: async (req,res)=>{
+    orderByColor: async (req,res)=>{
       try {
         const {color}= req.body
         if(color){
           const query = await Products.find({
-            colors:{
+            color:{
                 $eq: color
             }
           })
-          res.send(query)
+        const mapQuery = query.map((p)=>{
+          return{
+            id: p._id,
+            name: p.name,
+            description: p.description,
+            price: p.price,
+            image: p.image,
+            category: p.category.categories,
+            count: p.count,
+            color: p.color
+          }
+        })
+        mapQuery.length ? res.status(200).send(mapQuery) :
+        res.status(404).send("Producto no encontrado con esas especificaciones")
         }else{
-         res.send('no')
+         res.send("Producto no encontrado con esas especificaciones")
         }
       } catch (error) {
-        
+        return res.status(500).send(error)
       }
+    },
+
+    orderByCategory: async (req,res)=>{
+      try {
+        const {type} = req.query
+        if(type){
+          const db = await Products.find({
+            'category.categories':{
+               $eq: type
+            }
+          })
+          const mapQuery = db.map((p)=>{
+            return{
+              id: p._id,
+              name: p.name,
+              description: p.description,
+              price: p.price,
+              image: p.image,
+              category: p.category.categories,
+              count: p.count,
+              color: p.color
+            }
+          })
+          mapQuery.length ? res.status(200).send(mapQuery) :
+          res.status(404).send("Producto no encontrado con esas especificaciones")
+          }else{
+           res.send("Producto no encontrado con esas especificaciones")
+          }
+        } catch (error) {
+          return res.status(500).send(error)
+        }
     },
 }
