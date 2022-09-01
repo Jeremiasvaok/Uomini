@@ -155,5 +155,53 @@ module.exports ={
       return res.status(500).send(error)
     }
   },
+  
+    orderPrice: async (req,res)=>{
+      try {
+        const {numero} = req.body
+        if(numero){
+        const query = await Products.find({
+          price:{
+            $lte: numero
+          }
+        })
+        const map = query.map((p)=>{
+          return{
+            id: p._id,
+            name: p.name,
+            description: p.description,
+            price: p.price,
+            image: p.image,
+            category: p.category.categories,
+            count: p.count,
+            color: p.color.colors
+          }
+        })
+        map.length ? res.status(200).send(map) :
+        res.status(404).send("Producto no encontrado con esas especificaciones")
+      }else{
+     return res.status(404).send("Producto no encontrado con esas especificaciones")
+      }
+      } catch (error) {
+        console.log(error)
+      }
+    },
 
+    orderColor: async (req,res)=>{
+      try {
+        const {color}= req.body
+        if(color){
+          const query = await Products.find({
+            colors:{
+                $eq: color
+            }
+          })
+          res.send(query)
+        }else{
+         res.send('no')
+        }
+      } catch (error) {
+        
+      }
+    },
 }
