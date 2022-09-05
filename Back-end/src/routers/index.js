@@ -23,6 +23,7 @@ routes.post('/create-products', postProducts)
 routes.put('/update-products/:id', updateProduct)
 routes.delete('/delete-products/:id',deleteProducts)
 
+/************************************************** | AUTH | **************************************************/
 
 
 module.exports = routes
