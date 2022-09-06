@@ -9,8 +9,13 @@ const {
     getProduct,
     orderByPrice,
     orderByColor,
-    orderByCategory
-} = require('../controllers/products')
+    orderByCategory,
+} = require('../controllers/products');
+
+const {
+    signUp,
+    signIn
+} = require('../controllers/authContollers')
 
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
 routes.get('/products', getAllProducts)
@@ -24,6 +29,7 @@ routes.put('/update-products/:id', updateProduct)
 routes.delete('/delete-products/:id',deleteProducts)
 
 /************************************************** | AUTH | **************************************************/
-
+routes.post('/signup', signUp)
+routes.post('/signin', signIn)
 
 module.exports = routes

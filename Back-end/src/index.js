@@ -4,8 +4,10 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const router = require('./routers/index')
 require('./mongodb')
+const createRole = require('./controllers/role')
 
 const app = express()
+createRole()
 
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'))
