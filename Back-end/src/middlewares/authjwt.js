@@ -2,7 +2,6 @@ require('dotenv').config()
 const { SECRET_TOKEN } = process.env
 const jwt = require('jsonwebtoken')
 const Role = require('../models/roles/roles.js')
-const user = require('../models/user/user.js')
 const User = require('../models/user/user.js')
 
 //verificamos si el token existe 
@@ -10,10 +9,10 @@ const verifyToken = async(req,res, next)=>{
     try {
         const token = req.headers["token"]
         console.log(token)
-        if(!token) return res.status(403).send('Token no entregado');
+        if(!token) return res.status(403).send('Acceso denegado');
        
         const tokenUser = jwt.verify(token, SECRET_TOKEN)
-       req.userId = tokenUser.id
+         req.userId = tokenUser.id
         const user = await User.findById(req.userId, {password:0})//con el password en 0 lo que hacemo es no mostrar la contraseña porque no la necesitamos 
         console.log(user)
         if(!user) return res.status(404).send("User no encontrado")
