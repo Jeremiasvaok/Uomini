@@ -23,7 +23,7 @@ module.exports = {
       }
 
       const saveUser = await newUser.save()
-      const token = jwt.sign({ id: saveUser._id }, SECRET_TOKEN, { expiresIn: 86400 /*expira 24 horas */ }//crea un token
+      const token = jwt.sign({ id: saveUser._id}, SECRET_TOKEN, { expiresIn: 86400 /*expira 24 horas */ }//crea un token
       )
       res.json({ token })
     } catch (error) {
