@@ -17,6 +17,7 @@ const {
     signIn
 } = require('../controllers/authContollers')
 
+
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
 routes.get('/products', getAllProducts)
 routes.get('/product/:id', getProduct)

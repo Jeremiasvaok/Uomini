@@ -1,7 +1,6 @@
 const Products = require('../../models/product/product')
 const User = require('../../models/user/user')
-const { getTokenData} = require('../../jwtAuth.js')
-const { SECRET_TOKEN } = process.env
+const { getTokenData, isAdmin } = require('../../jwtAuth')
 
 module.exports ={
 
@@ -80,7 +79,7 @@ module.exports ={
     }
     const token = autorization.substring(7)//esta costante va a contener el token, el token principalmente es asi bearer jdsiijyVGVG, Y CON EL SUBSTRING(7) saca a bearer y deja el token solo
     const data = getTokenData(token) // le mandatmos a la funcion getTokenData el token que nos pasaron eso nos va a responder con la data o un error 
-    //console.log(data)
+    console.log(data)
     if (!data) { 
       return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
     }
@@ -88,7 +87,16 @@ module.exports ={
     if(!user) {
       return res.status(404).json({ message: 'No se ha encontrado usuario' })
     }
-
+    const dataTwo = await isAdmin(data.id)
+    try {
+      const infoName = dataTwo.map((role) => role.name)
+      console.log(datoss[0])
+      if(infoName[0] !== 'admin') return res.status(403)
+    } catch (error) {
+      return res.status(403).send('Necesitas ser administrador para crear un producto')
+    }
+    
+    
 
 
     if (!name) {
@@ -153,7 +161,14 @@ module.exports ={
       if(!userToken){
         return res.status(404).json({ message: 'No se ha encontrado usuario' })
       }
-
+      const dataTwo = await isAdmin(data.id)
+      try {
+        const infoName = dataTwo.map((role) => role.name)
+        console.log(datoss[0])
+        if(infoName[0] !== 'admin') return res.status(403)
+      } catch (error) {
+        return res.status(403).send('Necesitas ser administrador para moficar un producto')
+      }
 
 
       if(!name){
@@ -206,7 +221,14 @@ module.exports ={
       if(!userToken){
         return res.status(404).json({ message: 'No se ha encontrado usuario' })
       }
-
+      const dataTwo = await isAdmin(data.id)
+      try {
+        const infoName = dataTwo.map((role) => role.name)
+        console.log(datoss[0])
+        if(infoName[0] !== 'admin') return res.status(403)
+      } catch (error) {
+        return res.status(403).send('Necesitas ser administrador para eliminar un producto')
+      }
       
       if(id){
        const deletee = await Products.findByIdAndDelete(id);
