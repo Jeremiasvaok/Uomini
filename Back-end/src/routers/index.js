@@ -15,7 +15,7 @@ const {
 const {
     signUp,
     signIn
-} = require('../controllers/authContollers')
+} = require('../controllers/auth')
 
 
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
