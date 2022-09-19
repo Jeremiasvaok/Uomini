@@ -23,20 +23,20 @@ const getTokenData = (token) => {
 
 const isAdmin = async(tokenid)=>{
     try {
-      const user = await User.findById(tokenid, {passport: 0})
+      const user = await User.findById(tokenid, {password: 0})
      // console.log(user)
       if(!user){
-         console.log('No encontrado')
+         console.log('No existe ese usuario')
       }
       const role = await Roles.find({_id : {$in:user.roles}})
       //console.log(role)
       for(let i = 0; i < role.length; i++){
         if(role[i].name === 'admin'){
-            return role
+            return role 
         }
       }
     } catch (error) {
-        console.log(error, 'hola')
+        console.log(error)
     }
 }
 module.exports = {

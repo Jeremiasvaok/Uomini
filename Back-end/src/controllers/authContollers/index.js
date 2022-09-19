@@ -1,7 +1,7 @@
 const User = require('../../models/user/user.js')
 require('dotenv').config()
 const Role = require('../../models/roles/roles')
-const { getToken } = require('../../jwtAuth')
+const { getToken } = require('../../config')
 
 module.exports = {
 
