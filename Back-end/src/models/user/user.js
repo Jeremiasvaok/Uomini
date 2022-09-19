@@ -18,7 +18,12 @@ const bcrypt = require('bcryptjs')
     roles:[{
         ref: "Role", //el ref es para decir que esta relacionado con otro modelo de datos 
         type: Schema.Types.ObjectId  //obtenemos el id de la referencia
-    }]
+    }],
+    isConfirmed: {
+        type: Boolean,
+        required: true,
+        default: false
+      },
  })
 
  // cifrar contrasrña

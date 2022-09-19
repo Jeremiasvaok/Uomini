@@ -14,7 +14,8 @@ const {
 
 const {
     signUp,
-    signIn
+    signIn,
+    confirmEmail
 } = require('../controllers/auth')
 
 
@@ -32,5 +33,6 @@ routes.delete('/delete-products/:id', deleteProducts)
 /************************************************** | AUTH | **************************************************/
 routes.post('/signup', signUp)
 routes.post('/signin', signIn)
+routes.get('/user/confirm/token/:token', confirmEmail)
 
 module.exports = routes

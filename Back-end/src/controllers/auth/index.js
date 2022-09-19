@@ -1,9 +1,9 @@
 const User = require('../../models/user/user.js')
 require('dotenv').config()
 const Role = require('../../models/roles/roles')
-const { getToken } = require('../../config')
-const {getTemplate} = require('./sendMail')
-const {sendEmail} = require('../../config/nodemeiler.js')
+const { getToken, getTokenData } = require('../../config')
+const {sendEmail, getTemplate} = require('../../config/nodemeiler.js')
+
 module.exports = {
 
   signUp: async (req, res) => {
@@ -27,13 +27,13 @@ module.exports = {
         const role = await Role.findOne({ name: "user" })
         newUser.roles = [role._id]
       }
-      const token = getToken(newUser._id)
+      const saveUser = await newUser.save()
+      const token = getToken(saveUser._id)
        //obtener template
-       const template = getTemplate(newUser.name, token)
+       const template = getTemplate(saveUser.username, token)
        //enviamos mail
-       await sendEmail(newUser.email,'Emmail de prueba', template)
-       //guardamos user
-       const saveUser = await newUser.save()
+       await sendEmail(saveUser.email,'Confirmar usuario', template)
+       
        res.json({saveUser, token })
 
     } catch (error) {
@@ -57,5 +57,30 @@ module.exports = {
     } catch (error) {
       console.log(error)
     }
-  }
+  },
+
+  confirmEmail: async (req,res)=>{
+     const {token } = req.params
+     try {
+      //verificar data
+      let data = getTokenData(token)
+      console.log(data.id)
+      if(!data){
+        return res.status(404).send('Error al obtener la data')
+      }
+      //verificar usuario
+      const user = await User.findOne(data.id)
+       if(!user){
+        return res.status(404).send('No existe el usuario')
+       }
+       if(data.id !== user._id){
+        return res.redirect('../../../public/error.html')
+       }
+       user.isConfirmed = true
+       await user.save()
+       return res.redirect('../../../public/confirm.html')
+     } catch (error) {
+       console.log(error)
+     }
+}
 }
