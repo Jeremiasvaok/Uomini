@@ -8,15 +8,14 @@ const path = require('path')
 module.exports = {
 
   signUp: async (req, res) => {
-    const { username, email, password, roles } = req.body
+    const {firstName, lastName, email, password, roles} = req.body
     try {
       const gmailFound = await User.findOne({email : email})
       if(gmailFound) return res.status(403).send('Ya existe un usuario con ese Gmail')
-      const usernemeFound = await User.findOne({username : username});
-      if(usernemeFound) return res.status(403).send('Ya existe un usuario con ese Nombre')
 
       const newUser = new User({
-        username,
+        firstName,
+        lastName,
         email,
         password: await User.encryptPassword(password),
       })
@@ -31,7 +30,7 @@ module.exports = {
       const saveUser = await newUser.save()
       const token = getToken(saveUser._id)
        //obtener template
-       const template = getTemplate(saveUser.username, token)
+       const template = getTemplate(saveUser.firstName, token)
        //enviamos mail
        await sendEmail(saveUser.email,'Confirmar usuario', template)
        
@@ -81,5 +80,5 @@ module.exports = {
      } catch (error) {
        console.log(error)
      }
-    }
+  }
 }
