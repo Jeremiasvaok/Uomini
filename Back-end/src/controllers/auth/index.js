@@ -3,6 +3,7 @@ require('dotenv').config()
 const Role = require('../../models/roles/roles')
 const { getToken, getTokenData } = require('../../config')
 const {sendEmail, getTemplate} = require('../../config/nodemeiler.js')
+const path = require('path')
 
 module.exports = {
 
@@ -64,23 +65,21 @@ module.exports = {
      try {
       //verificar data
       let data = getTokenData(token)
-      console.log(data.id)
-      if(!data){
-        return res.status(404).send('Error al obtener la data')
-      }
+     // console.log(data.id, 'aqui')
       //verificar usuario
-      const user = await User.findOne(data.id)
+      const user = await User.findById(data.id)
        if(!user){
-        return res.status(404).send('No existe el usuario')
+        return res.sendFile(path.join(__dirname, '../../public/error.html'))
        }
-       if(data.id !== user._id){
-        return res.redirect('../../../public/error.html')
-       }
+       if(data === null){
+        return res.sendFile(path.join(__dirname, '../../public/tokenError.html'))
+      }
+
        user.isConfirmed = true
        await user.save()
-       return res.redirect('../../../public/confirm.html')
+       return res.sendFile(path.join(__dirname, '../../public/confirm.html'))
      } catch (error) {
        console.log(error)
      }
-}
+    }
 }
