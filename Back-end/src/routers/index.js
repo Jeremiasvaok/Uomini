@@ -15,9 +15,16 @@ const {
 const {
     signUp,
     signIn,
-    confirmEmail
+    confirmEmail,
+    forgotPassword,
+    forgotPasswordConfirm
 } = require('../controllers/auth')
 
+const {
+    getFavorites,
+    newFavorite,
+    deleteFavorites
+} = require('../controllers/favorites')
 
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
 routes.get('/products', getAllProducts)
@@ -30,9 +37,16 @@ routes.post('/create-products', postProducts)
 routes.put('/update-products/:id', updateProduct)
 routes.delete('/delete-products/:id', deleteProducts)
 
-/************************************************** | AUTH | **************************************************/
+/************************************************** | RUTAS AUTH | **************************************************/
 routes.post('/signup', signUp)
 routes.post('/signin', signIn)
 routes.get('/user/confirm/token/:token', confirmEmail)
+routes.post('/forgot/password', forgotPassword)
+routes.put('/user/fargot/password/token/:token', forgotPasswordConfirm)
+/************************************************** |RUTAS PARA PRODUCTOS FAVORITOS | **************************************************/
+
+routes.get('/favorites/products', getFavorites)
+routes.post('/product/favorite/:idproducts', newFavorite)
+routes.delete('/productos/favorites/dalete/:idProducts', deleteFavorites)
 
 module.exports = routes
