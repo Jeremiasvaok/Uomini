@@ -17,7 +17,7 @@ module.exports = {
     const { firstName, lastName, email, password, roles } = req.body
     try {
       const gmailFound = await User.findOne({ email: email })
-      if (gmailFound) return res.status(403).send('Ya existe un usuario con ese Gmail')
+      if (gmailFound) return res.status(403).json({msg:'Ya existe un usuario con ese Gmail'})
 
       const newUser = new User({
         firstName,
@@ -52,7 +52,7 @@ module.exports = {
       const { email, password } = req.body
       const userFound = await User.findOne({ email: email }).populate('roles')//como el user se relaciona con roles el metodo populate hace que se pueble y que no me aparezca solo el id sino tambien el nombre que contiene ese id 
       // console.log(userFound)
-      if (!userFound) return res.status(404).send("Usuario o contraseña invalida");
+      if (!userFound) return res.status(404).json({msg:"Usuario o contraseña invalida"});
       if (!userFound.isConfirmed) {
         return res.status(401).json({ msg: 'El usuario no confirmo su cuenta' })
       }
@@ -72,29 +72,26 @@ module.exports = {
       const { email, password } = req.body
       const user = await User.findOne({ email: email })
       if (!user) {
-        return res.status(404).json("Usuario o contraseña invalida");
+        return res.status(404).json({msg: "Usuario o contraseña invalida"});
       }
-      // if (!user.isConfirmed) {
-      //   return res.status(401).json({ msg: "El usuario no confirmo su cuenta" })
-      // }
+      if (!user.isConfirmed) {
+        return res.status(401).json({ msg: "El usuario no confirmo su cuenta" })
+      }
       const comparePassword = await User.comparePassword(password, user.password)
       if (!comparePassword) {
-        return res.status(404).send("Usuario o contraseña invalida")
+        return res.status(404).json({msg:"Usuario o contraseña invalida"})
       }
       const id = user._id
       const admin = await isAdmin(id)
     try {
-        const infoName = dataTwo.map((role) => role.name)
+        const infoName = admin.map((role) => role.name)
         console.log(datoss[0])
         if (infoName[0] !== 'admin') return res.status(403)
       } catch (error) {
-        return res.status(403).send('No tenes permitido ingresar porque no sos administrador')
+        return res.status(403).json({msg:'No tenes permitido ingresar porque no sos administrador'})
       }
-
       const token = getToken(user._id)
-      console.log('ok')
       return res.json({ token })
-    
     } catch (error) {
       console.log(error)
     }
@@ -127,7 +124,7 @@ module.exports = {
     try {
       const { email } = req.body
       if (!email) {
-        return send.status(404).send('El campo es obligatorio')
+        return send.status(404).json({msg:'El campo es obligatorio'})
       }
       const user = await User.findOne({ email })
       if (!user) {
@@ -148,10 +145,10 @@ module.exports = {
     console.log(req.params)
     const authorization = req.get('authorization')
     if (!authorization) {
-      return res.status(401).json('No tienes permiso para hacer esto')
+      return res.status(401).json({msg: 'No tienes permiso para hacer esto'})
     }
     if (authorization.split(' ')[0].toLowerCase() !== 'berear') {
-      return res.status(401).json('No tienes permitodo hacer esto')
+      return res.status(401).json({msg: 'No tienes permiso para hacer esto'})
     }
     const data = getTokenData(token)
     const user = await User.findById(data.id)
@@ -161,7 +158,7 @@ module.exports = {
     const { password1, password2 } = req.body
 
     if (!password1 || !password2) {
-      return res.status(404).json('No se ingresaron las contraseñas')
+      return res.status(404).json({msg:'No se ingresaron las contraseñas'})
     }
     if (password1 !== password2) {
       return res.status(403).json({ msg: 'Las contraseñs no coinciden' })
