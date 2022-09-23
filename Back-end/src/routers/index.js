@@ -15,6 +15,7 @@ const {
 const {
     signUp,
     signIn,
+    signInAdmin,
     confirmEmail,
     forgotPassword,
     forgotPasswordConfirm
@@ -40,11 +41,12 @@ routes.delete('/delete-products/:id', deleteProducts)
 /************************************************** | RUTAS AUTH | **************************************************/
 routes.post('/signup', signUp)
 routes.post('/signin', signIn)
+routes.post('/signin/admin', signInAdmin)
 routes.get('/user/confirm/token/:token', confirmEmail)
 routes.post('/forgot/password', forgotPassword)
 routes.put('/user/fargot/password/token/:token', forgotPasswordConfirm)
-/************************************************** |RUTAS PARA PRODUCTOS FAVORITOS | **************************************************/
 
+/************************************************** |RUTAS PARA PRODUCTOS FAVORITOS | **************************************************/
 routes.get('/favorites/products', getFavorites)
 routes.post('/product/favorite/:idproducts', newFavorite)
 routes.delete('/productos/favorites/dalete/:idProducts', deleteFavorites)

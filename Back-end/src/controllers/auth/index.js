@@ -1,11 +1,15 @@
-const User = require('../../models/user/user.js')
 require('dotenv').config()
-const Role = require('../../models/roles/roles')
-const { getToken, getTokenData } = require('../../config')
-const { sendEmail, getTemplate,
-  fargotPasswordTemplate, successForgotPassword
-} = require('../../config/nodemeiler.js')
 const path = require('path')
+const Role = require('../../models/roles/roles')
+const User = require('../../models/user/user.js')
+const { getToken, getTokenData, isAdmin } = require('../../config')
+const {
+  sendEmail,
+  getTemplate,
+  fargotPasswordTemplate,
+  successForgotPassword
+} = require('../../config/nodemeiler.js')
+
 
 module.exports = {
 
@@ -49,7 +53,9 @@ module.exports = {
       const userFound = await User.findOne({ email: email }).populate('roles')//como el user se relaciona con roles el metodo populate hace que se pueble y que no me aparezca solo el id sino tambien el nombre que contiene ese id 
       // console.log(userFound)
       if (!userFound) return res.status(404).send("Usuario o contraseña invalida");
-
+      if (!userFound.isConfirmed) {
+        return res.status(401).json({ msg: 'El usuario no confirmo su cuenta' })
+      }
       const comparePassword = await User.comparePassword(password, userFound.password)// hacemos una validacion y comparamos la contraseña que nos envia el usuario , si la contraseña que nos envia el usuario es igual a la contraseña que trajimos por email esta todo correcto
       if (!comparePassword) return res.status(404).send("Contraseña invalida")
 
@@ -60,6 +66,33 @@ module.exports = {
       console.log(error)
     }
   },
+
+  signInAdmin: async (req, res) => {
+    try {
+      const { email, password } = req.body
+      const user = await User.findOne({ email: email })
+      if (!user) {
+        return res.status(404).json("Usuario o contraseña invalida");
+      }
+      if (!user.isConfirmed) {
+        return res.status(401).json({ msg: "El usuario no confirmo su cuenta" })
+      }
+      const comparePassword = await User.comparePassword(password, user.password)
+      if (!comparePassword) {
+        return res.status(404).send("Usuario o contraseña invalida")
+      }
+      const id = user._id
+      const admin = isAdmin(id)
+      const infoName = admin.map((role) => role.name)
+      if (infoName[0] !== 'admin') {
+        return res.status(403).json({ msg: 'Necesitas ser administrador para eliminar un producto' })
+      }
+      const token = getToken(user._id)
+      res.json({ token })
+    } catch (error) {
+      console.log(error)
+    }
+},
 
   confirmEmail: async (req, res) => {
     const { token } = req.params
@@ -96,9 +129,9 @@ module.exports = {
       }
       const token = getToken(user._id)
       console.log(token)
-      const template =  fargotPasswordTemplate(user.firstName, token)
+      const template = fargotPasswordTemplate(user.firstName, token)
       await sendEmail(user.email, 'Cambiar Contraseña', template)
-      return res.status(200).json({ msg: `Se le envio un Email a: ${user.email}, para cambiar la contraseña`})
+      return res.status(200).json({ msg: `Se le envio un Email a: ${user.email}, para cambiar la contraseña` })
     } catch (error) {
       console.log(error)
     }
@@ -128,12 +161,13 @@ module.exports = {
       return res.status(403).json({ msg: 'Las contraseñs no coinciden' })
     }
     const update = await User.findByIdAndUpdate(data.id, { password: await User.encryptPassword(password2) })
-    const template =  successForgotPassword(user.firstName)
+    const template = successForgotPassword(user.firstName)
 
     await sendEmail(user.email, 'Exito', template)
 
     console.log(res.json({ update }))
   },
+
   forgotEmail: async (req, res) => {
 
   },
