@@ -24,7 +24,7 @@ const getTokenData = (token) => {
 const isAdmin = async(tokenid)=>{
     try {
       const user = await User.findById(tokenid, {password: 0})
-     // console.log(user)
+      //console.log(user)
       if(!user){
          console.log('No existe ese usuario')
       }
@@ -32,7 +32,7 @@ const isAdmin = async(tokenid)=>{
       //console.log(role)
       for(let i = 0; i < role.length; i++){
         if(role[i].name === 'admin'){
-            return role 
+            return role
         }
       }
     } catch (error) {

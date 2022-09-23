@@ -74,21 +74,27 @@ module.exports = {
       if (!user) {
         return res.status(404).json("Usuario o contraseña invalida");
       }
-      if (!user.isConfirmed) {
-        return res.status(401).json({ msg: "El usuario no confirmo su cuenta" })
-      }
+      // if (!user.isConfirmed) {
+      //   return res.status(401).json({ msg: "El usuario no confirmo su cuenta" })
+      // }
       const comparePassword = await User.comparePassword(password, user.password)
       if (!comparePassword) {
         return res.status(404).send("Usuario o contraseña invalida")
       }
       const id = user._id
-      const admin = isAdmin(id)
-      const infoName = admin.map((role) => role.name)
-      if (infoName[0] !== 'admin') {
-        return res.status(403).json({ msg: 'Necesitas ser administrador para eliminar un producto' })
+      const admin = await isAdmin(id)
+    try {
+        const infoName = dataTwo.map((role) => role.name)
+        console.log(datoss[0])
+        if (infoName[0] !== 'admin') return res.status(403)
+      } catch (error) {
+        return res.status(403).send('No tenes permitido ingresar porque no sos administrador')
       }
+
       const token = getToken(user._id)
-      res.json({ token })
+      console.log('ok')
+      return res.json({ token })
+    
     } catch (error) {
       console.log(error)
     }
@@ -175,4 +181,5 @@ module.exports = {
   changeUser: async (req, res) => {
 
   },
+
 }
