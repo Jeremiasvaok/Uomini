@@ -1,7 +1,7 @@
-const nodemailer = require('nodemailer')
-const { google} = require('googleapis')
-require('dotenv').config()
-const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env
+require("dotenv").config();
+const { CLIENT_SECRET, CLIENT_ID, REDIRECT_URI, REFRESH_TOKEN } = process.env;
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 
 const mail = {
   user: "jeremias.vallejos78@gmail.com",
@@ -42,7 +42,6 @@ const sendEmail = async (email, subject, html) => {
     console.log("Algo no va bien con el email", error);
   }
 };
-
 
 const getTemplate = (name, token) => {
   return `

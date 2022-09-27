@@ -18,7 +18,10 @@ const {
     signInAdmin,
     confirmEmail,
     forgotPassword,
-    forgotPasswordConfirm
+    forgotPasswordConfirm,
+    changeUser,
+    findUsers,
+    deleteUser
 } = require('../controllers/auth')
 
 const {
@@ -45,6 +48,9 @@ routes.post('/signin/admin', signInAdmin)
 routes.get('/user/confirm/token/:token', confirmEmail)
 routes.post('/forgot/password', forgotPassword)
 routes.put('/user/fargot/password/token/:token', forgotPasswordConfirm)
+routes.put('/user/change', changeUser)
+routes.get('/find/users', findUsers)
+routes.delete('/delete/user/:id', deleteUser)
 
 /************************************************** |RUTAS PARA PRODUCTOS FAVORITOS | **************************************************/
 routes.get('/favorites/products', getFavorites)
