@@ -43,7 +43,7 @@ module.exports = {
       // res.json({saveUser, token })
       return res.status(200).json({ msg: `se envio un Email a: ${saveUser.email} para confirmar el usuario` })
     } catch (error) {
-      return res.status(500).json({msg: error})
+      return res.status(500).json({ msg: error })
       console.log(error)
     }
   },
@@ -65,7 +65,7 @@ module.exports = {
       return res.json({ token })
     } catch (error) {
       console.log(error)
-      return res.status(500).json({msg: 'error'})
+      return res.status(500).json({ msg: 'error' })
     }
   },
 
@@ -94,8 +94,9 @@ module.exports = {
       }
       const token = getToken(user._id)
       return res.json({ token })
-    } catch (error) {s
-      return res.status(500).json({msg: error})
+    } catch (error) {
+  
+      return res.status(500).json({ msg: error })
 
     }
   },
@@ -118,7 +119,7 @@ module.exports = {
       await user.save()
       return res.sendFile(path.join(__dirname, '../../public/confirm.html'))
     } catch (error) {
-      return res.status(500).json({msg: error})
+      return res.status(500).json({ msg: error })
     }
   },
 
@@ -138,7 +139,7 @@ module.exports = {
       await sendEmail(user.email, 'Cambiar Contraseña', template)
       return res.status(200).json({ msg: `Se le envio un Email a: ${user.email}, para cambiar la contraseña` })
     } catch (error) {
-      return res.status(500).json({msg: error})
+      return res.status(500).json({ msg: error })
     }
   },
 
@@ -157,9 +158,9 @@ module.exports = {
       const user = await User.findById(data.id)
       if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' })
       if (!user.isConfirmed) return res.status(403).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada para cambiar la contraseña' })
-  
+
       const { password1, password2 } = req.body
-  
+
       if (!password1 || !password2) {
         return res.status(404).json({ msg: 'No se ingresaron las contraseñas' })
       }
@@ -168,17 +169,13 @@ module.exports = {
       }
       const update = await User.findByIdAndUpdate(data.id, { password: await User.encryptPassword(password2) })
       const template = successForgotPassword(user.firstName)
-  
+
       await sendEmail(user.email, 'Exito', template)
-  
+
       return res.status(200).json({ msg: `${update.lastName}se cambio correctamente la contraseña` })
     } catch (error) {
-      return res.status(500).json({msg: error})
+      return res.status(500).json({ msg: error })
     }
-  },
-
-  forgotEmail: async (req, res) => {
-
   },
 
   changeUser: async (req, res) => {
@@ -210,7 +207,7 @@ module.exports = {
 
     } catch (error) {
       console.log(error)
-      return res.status(500).json({msg: error})
+      return res.status(500).json({ msg: error })
     }
   },
 
@@ -234,7 +231,7 @@ module.exports = {
         return res.status(404).json({ msg: 'No se encontro ningun usuario' })
       }
       if (!user.isConfirmed) {
-        return res.status(403).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada para cambiar la contraseña' })
+        return res.status(403).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada' })
       }
       const dataTwo = await isAdmin(data.id)
       try {
@@ -245,7 +242,7 @@ module.exports = {
         return res.status(403).send('Necesitas ser administrador para  obtener todos los usuarios')
       }
       const findUser = await User.find()
-      const users = findUser.map((u) =>{
+      const users = findUser.map((u) => {
         return {
           id: u._id,
           firstName: u.firstName,
@@ -254,53 +251,143 @@ module.exports = {
           email: u.email
         }
       })
-      
+
       return res.status(200).json(users)
 
     } catch (error) {
       console.log(error)
-      return res.status(500).json({msg: 'error'})
+      return res.status(500).json({ msg: 'error' })
     }
   },
-  deleteUser: async (req,res)=>{
+  deleteUser: async (req, res) => {
     try {
-      const {id}= req.params
+      const { id } = req.params
       const authorization = req.get('authorization')
-      if(!authorization){
-        return res.status(401).json({msg: 'No tienes permiso para hacer esto'})
+      if (!authorization) {
+        return res.status(401).json({ msg: 'No tienes permiso para hacer esto' })
       }
-      if(authorization.split(' ')[0].toLowerCase() !== 'berear'){
-        return res.status(401).json({msg:'No tienes permiso para hacer esto'})
+      if (authorization.split(' ')[0].toLowerCase() !== 'berear') {
+        return res.status(401).json({ msg: 'No tienes permiso para hacer esto' })
       }
       const token = authorization.split(' ')[1]
       const data = getTokenData(token)
-      if(!data){
-        return res.status(401).json({msg:'No tienes permiso para hecer esto'})
+      if (!data) {
+        return res.status(401).json({ msg: 'No tienes permiso para hecer esto' })
       }
       const user = await User.findById(data.id)
-      if(!user){
-        return res.status(404).json({msg: 'No se encontro ningun usuario'})
+      if (!user) {
+        return res.status(404).json({ msg: 'No se encontro ningun usuario' })
       }
       if (!user.isConfirmed) {
-        return res.status(401).json({ msg: "El usuario no confirmo su cuenta" })
+        return res.status(401).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada' })
       }
       try {
-      const admin = await isAdmin(data.id)
-      const dataAdmin = admin.map(role => role.name)
-      if(dataAdmin[0] !== 'admin') return res.status(403)
+        const admin = await isAdmin(data.id)
+        const dataAdmin = admin.map(role => role.name)
+        if (dataAdmin[0] !== 'admin') return res.status(403)
       } catch (error) {
-        return res.status(403).json({msg: 'Necesitas ser administrador para eliminar usuarios'})
+        return res.status(403).json({ msg: 'Necesitas ser administrador para traer usuarios' })
       }
-      if(id){
-      const deleteUser = await User.findByIdAndRemove(id)
-      return res.status(200).json({msg:'Se elimino correctamente el usuario'})
-      }else{
-        return res.status(404).json({msg: 'No se pudo eliminar el usuario'})
+      if (id) {
+        const deleteUser = await User.findByIdAndRemove(id)
+        return res.status(200).json({ msg: 'Se elimino correctamente el usuario' })
+      } else {
+        return res.status(404).json({ msg: 'No se pudo eliminar el usuario' })
       }
     } catch (error) {
       console.log(error)
-      return res.status(403).json({msg: 'error'})
+      return res.status(403).json({ msg: 'error' })
     }
   },
 
+  queryUser: async (req, res) => {
+    try {
+      const { name } = req.query
+      const authorization = req.get('authorization')
+      if (!authorization) {
+        return res.status(401).json({ msg: 'No tienes permitido hacer esto' })
+      }
+      if (authorization.split(' ')[0].toLowerCase() !== 'berear') {
+        return re.status(401).json({ msg: 'No tienes permitido hacer esto' })
+      }
+      const token = authorization.split(' ')[1]
+      const data = getTokenData(token)
+      if (!data) {
+        return res.status(401).json({ msg: 'No tienes permitido hacer esto' })
+      }
+      const user = await User.findById(dataa.id)
+      if (!user) {
+        return res.status(404).json({ msg: 'Usuario no encontrado' })
+      }
+      try {
+        const admin = isAdmin(data.id)
+        const isAdmin = admin.map(role => role.name)
+        if (isAdmin[0] !== "admin") return res.status(403)
+      } catch (error) {
+        return res.status(403).json({ msg: 'Necesitas ser administrador para buscar usuarios' })
+      }
+      const find = await User.find()
+      const findUser = find.map(u => {
+        return {
+          id: u._id,
+          firstName: u.firstName,
+          lastName: u.lastName,
+          img: u.img,
+          email: u.email
+        }
+      })
+      const info = findUser.filter((d) => d.name.toLowerCase().includes(name.toLowerCase()))
+      info.length ? res.status(200).send(info) :
+        res.status(404).send('Producto no encontrado')
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
+  detailsUser: async (req, res) => {
+    try {
+      const { id } = req.params
+      const authorization = req.get('authorization')
+      if (!authorization) {
+        return res.status(401).json({ msg: 'No tienes permitido hacer esto' })
+      }
+      if (authorization.split(' ')[0].toLowerCase() !== 'berear') {
+        return res.status(201).json({ msg: 'No tienes permitido hacer esto' })
+      }
+      const token = authorization.split(' ')[1]
+      const data = getTokenData(token)
+      if (!data) {
+        return res.status(401).json({ msg: 'No tienes permitido hacer esto' })
+      }
+      const user = await User.findById(data.id)
+      if (!user) {
+        return res.status(404).json({ msg: 'No se encontro ningun usuario' })
+      }
+      if (!user.isConfirmed) {
+        return res.status(401).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada' })
+      }
+      try {
+        const admin = isAdmin(data.id)
+        const isAdmin = admin.map(role => role.name)
+        if (isAdmin[0] !== 'admin') return res.status(403)
+      } catch (error) {
+        return res.status(403).json({ msg: 'Necesitas ser administrador para buscar usuarios' })
+      }
+      const detailsUser = await User.findById(id)
+      const details = detailsUser.map((u) => {
+        return {
+          id: u._id,
+          firstName: u.firstName,
+          lastName: u.lastName,
+          img: u.img,
+          email: u.email,
+          confirm: u.isConfirmed,
+          role: u.roles
+        }
+      })
+      return res.status(200).json({ details })
+    } catch (error) {
+      console.log(error)
+    }
+  },
 }

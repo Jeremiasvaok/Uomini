@@ -21,7 +21,9 @@ const {
     forgotPasswordConfirm,
     changeUser,
     findUsers,
-    deleteUser
+    deleteUser,
+    queryUser,
+    detailsUser
 } = require('../controllers/auth')
 
 const {
@@ -51,6 +53,8 @@ routes.put('/user/fargot/password/token/:token', forgotPasswordConfirm)
 routes.put('/user/change', changeUser)
 routes.get('/find/users', findUsers)
 routes.delete('/delete/user/:id', deleteUser)
+routes.get('/details/user/:id', detailsUser)
+routes.get('/query/user', queryUser)
 
 /************************************************** |RUTAS PARA PRODUCTOS FAVORITOS | **************************************************/
 routes.get('/favorites/products', getFavorites)
