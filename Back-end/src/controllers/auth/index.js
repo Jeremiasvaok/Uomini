@@ -44,7 +44,7 @@ module.exports = {
       return res.status(200).json({ msg: `se envio un Email a: ${saveUser.email} para confirmar el usuario` })
     } catch (error) {
       return res.status(500).json({ msg: error })
-      console.log(error)
+
     }
   },
 
@@ -95,7 +95,7 @@ module.exports = {
       const token = getToken(user._id)
       return res.json({ token })
     } catch (error) {
-  
+
       return res.status(500).json({ msg: error })
 
     }
@@ -261,7 +261,6 @@ module.exports = {
   },
   deleteUser: async (req, res) => {
     try {
-      const { id } = req.params
       const authorization = req.get('authorization')
       if (!authorization) {
         return res.status(401).json({ msg: 'No tienes permiso para hacer esto' })
@@ -281,18 +280,19 @@ module.exports = {
       if (!user.isConfirmed) {
         return res.status(401).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada' })
       }
+      const admin = await isAdmin(data.id)
       try {
-        const admin = await isAdmin(data.id)
         const dataAdmin = admin.map(role => role.name)
         if (dataAdmin[0] !== 'admin') return res.status(403)
       } catch (error) {
         return res.status(403).json({ msg: 'Necesitas ser administrador para traer usuarios' })
       }
-      if (id) {
+      const { id } = req.params
+      if (!id) {
+        return res.status(404).json({ msg: 'No se pudo eliminar el usuario' })
+      } else {
         const deleteUser = await User.findByIdAndRemove(id)
         return res.status(200).json({ msg: 'Se elimino correctamente el usuario' })
-      } else {
-        return res.status(404).json({ msg: 'No se pudo eliminar el usuario' })
       }
     } catch (error) {
       console.log(error)
@@ -315,18 +315,21 @@ module.exports = {
       if (!data) {
         return res.status(401).json({ msg: 'No tienes permitido hacer esto' })
       }
-      const user = await User.findById(dataa.id)
+      const user = await User.findById(data.id)
       if (!user) {
         return res.status(404).json({ msg: 'Usuario no encontrado' })
       }
+      // const id = user._id
+      const admin = await isAdmin(data.id)
       try {
-        const admin = isAdmin(data.id)
-        const isAdmin = admin.map(role => role.name)
-        if (isAdmin[0] !== "admin") return res.status(403)
+        const infoName = admin.map((role) => role.name)
+        console.log(infoName)
+        if (infoName[0] !== 'admin') return res.status(403)
       } catch (error) {
-        return res.status(403).json({ msg: 'Necesitas ser administrador para buscar usuarios' })
+        return res.status(403).json({ msg: 'No tenes permitido ingresar porque no sos administrador' })
       }
       const find = await User.find()
+      console.log(find)
       const findUser = find.map(u => {
         return {
           id: u._id,
@@ -336,7 +339,7 @@ module.exports = {
           email: u.email
         }
       })
-      const info = findUser.filter((d) => d.name.toLowerCase().includes(name.toLowerCase()))
+      const info = findUser.filter((d) => d.firstName.toLowerCase().includes(name.toLowerCase()))
       info.length ? res.status(200).send(info) :
         res.status(404).send('Producto no encontrado')
     } catch (error) {
@@ -366,15 +369,18 @@ module.exports = {
       if (!user.isConfirmed) {
         return res.status(401).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada' })
       }
+      const admin = await isAdmin(data.id)
       try {
-        const admin = isAdmin(data.id)
-        const isAdmin = admin.map(role => role.name)
-        if (isAdmin[0] !== 'admin') return res.status(403)
+        const infoName = admin.map(role => role.name)
+        console.log(infoName)
+        if (infoName[0] !== 'admin') return res.status(403)
       } catch (error) {
         return res.status(403).json({ msg: 'Necesitas ser administrador para buscar usuarios' })
       }
-      const detailsUser = await User.findById(id)
-      const details = detailsUser.map((u) => {
+      const detailsUser = await User.findById(id).populate('roles')
+      console.log(detailsUser)
+      let valores = Object.values(detailsUser)
+      const details = valores.map((u) => {
         return {
           id: u._id,
           firstName: u.firstName,
@@ -385,7 +391,7 @@ module.exports = {
           role: u.roles
         }
       })
-      return res.status(200).json({ details })
+      return res.status(200).send(details)
     } catch (error) {
       console.log(error)
     }

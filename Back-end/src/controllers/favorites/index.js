@@ -39,7 +39,7 @@ module.exports = {
                 return res.json({ msg: 'Este item ya está en favoritos' })
             }
 
-            user.favorites = [...user.favorites, idProducts]
+            user.favorites = [...user.favorites, idproducts]
             await user.save()
             let userUpdate = await user.populate('favourites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
             return res.json({ msg: 'se ha guardado con exito'/*,favs: userUpdate.favourites*/ })
