@@ -2,7 +2,12 @@ require('dotenv').config()
 const path = require('path')
 const Role = require('../../models/roles/roles')
 const User = require('../../models/user/user.js')
-const { getToken, getTokenData, isAdmin } = require('../../config')
+const { 
+  getToken, 
+  getTokenData, 
+  isAdmin 
+} = require('../../config')
+
 const {
   sendEmail,
   getTemplate,
@@ -12,7 +17,7 @@ const {
 
 
 module.exports = {
-
+        
   signUp: async (req, res) => {
     const { firstName, lastName, email, password, roles } = req.body
     try {
@@ -375,9 +380,9 @@ module.exports = {
         console.log(infoName)
         if (infoName[0] !== 'admin') return res.status(403)
       } catch (error) {
-        return res.status(403).json({ msg: 'Necesitas ser administrador para buscar usuarios' })
+        return res.status(403).json({ msg: 'Necesitas ser administrador para buscar usuarios' });
       }
-      const detailsUser = await User.findById(id).populate('roles')
+      const detailsUser = await User.findById(id).populate('roles');
       console.log(detailsUser)
       let valores = Object.values(detailsUser)
       const details = valores.map((u) => {
@@ -390,7 +395,7 @@ module.exports = {
           confirm: u.isConfirmed,
           role: u.roles
         }
-      })
+      });
       return res.status(200).send(details)
     } catch (error) {
       console.log(error)
