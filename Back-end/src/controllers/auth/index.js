@@ -161,9 +161,12 @@ module.exports = {
       }
       const data = getTokenData(token)
       const user = await User.findById(data.id)
-      if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' })
-      if (!user.isConfirmed) return res.status(403).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada para cambiar la contraseña' })
-
+      if (!user){
+         return res.status(404).json({ msg: 'Usuario no encontrado' })
+      }
+      if (!user.isConfirmed){
+        return res.status(403).json({ msg: 'Tu cuenta no esta confirmada, necesita ser confirmada para cambiar la contraseña' })
+      }
       const { password1, password2 } = req.body
 
       if (!password1 || !password2) {
@@ -177,7 +180,7 @@ module.exports = {
 
       await sendEmail(user.email, 'Exito', template)
 
-      return res.status(200).json({ msg: `${update.lastName}se cambio correctamente la contraseña` })
+      return res.status(200).json({ msg: `${update.lastName} se cambio correctamente la contraseña` })
     } catch (error) {
       return res.status(500).json({ msg: error })
     }
