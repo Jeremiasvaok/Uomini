@@ -14,7 +14,8 @@ module.exports = {
           description: p.description,
           price: p.price,
           image: p.image,
-          category: p.category.categories,
+          season: p.season.seasons,
+          category: p.category,
           count: p.count,
           color: p.color
         }
@@ -49,8 +50,9 @@ module.exports = {
           description: p.description,
           price: p.price,
           image: p.image,
-          category: p.category.categories,
+          season: p.season.seasons,
           count: p.count,
+          category: p.category,
           color: p.color
         }
       })
@@ -68,7 +70,7 @@ module.exports = {
   },
 
   postProducts: async (req, res) => {
-    const { name, description, price, image, category, count, color } = req.body
+    const { name, description, price, image, season, category, count, color } = req.body
 
     const autorization = req.get('authorization')
     if (!autorization) {
@@ -107,10 +109,13 @@ module.exports = {
     else if (!price) {
       return res.status(404).send('Falta información, el PRECIO esta incompleta')
     }
+    else if (!category){
+      return res.status(404).send('Falta información, la CATEGORIA esta incompleta')
+    }
     else if (!image) {
       return res.status(404).send('Falta información, la IMAGEN esta incompleta')
     }
-    else if (!category) {
+    else if (!season) {
       return res.status(404).send('Falta información, la CATEGORIA esta incompleta')
     }
     else if (!count) {
@@ -125,6 +130,7 @@ module.exports = {
         description,
         price,
         image,
+        season,
         category,
         count,
         color
@@ -141,7 +147,7 @@ module.exports = {
 
   updateProduct: async (req, res) => {
     try {
-      const { name, description, price, image, category, count, color } = req.body
+      const { name, description, price, image, season, category, count, color } = req.body
       const { id } = req.params
 
       const authorization = req.get('authorization')
@@ -177,13 +183,16 @@ module.exports = {
       else if (!description) {
         return res.status(404).send('Falta información, la DESCRIPCION esta incompleta')
       }
+      else if (!category){
+        return res.status(404).send('Falta información, la CATEGORIA esta incompleta')
+      }
       else if (!price) {
         return res.status(404).send('Falta información, el PRECIO esta incompleta')
       }
       else if (!image) {
         return res.status(404).send('Falta información, la IMAGEN esta incompleta')
       }
-      else if (!category) {
+      else if (!season) {
         return res.status(404).send('Falta información, la CATEGORIA esta incompleta')
       }
       else if (!count) {
@@ -192,8 +201,8 @@ module.exports = {
       else if (!color) {
         return res.status(404).send('Falta información, los COLORES esta incompleta')
       }
-      if (id && name && description && price && image && category && count && color) {
-        const update = await Products.findByIdAndUpdate(id, { name, description, price, image, category, count, color })
+      if (id && name && description && price && image && season && category && count && color) {
+        const update = await Products.findByIdAndUpdate(id, { name, description, price, image, seasons, category, count, color })
         return res.status(200).json({ msg: "Producto modificado", update })
       }
     } catch (error) {
@@ -259,7 +268,8 @@ module.exports = {
             description: p.description,
             price: p.price,
             image: p.image,
-            category: p.category.categories,
+            season: p.season.seasons,
+            category:p.category,
             count: p.count,
             color: p.color
           }
@@ -290,7 +300,8 @@ module.exports = {
             description: p.description,
             price: p.price,
             image: p.image,
-            category: p.category.categories,
+            season: p.season.seasons,
+            category:p.category,
             count: p.count,
             color: p.color
           }
@@ -310,7 +321,7 @@ module.exports = {
       const { type } = req.query
       if (type) {
         const db = await Products.find({
-          'category.categories': {
+          'season.seasons': {
             $eq: type
           }
         })
@@ -321,7 +332,7 @@ module.exports = {
             description: p.description,
             price: p.price,
             image: p.image,
-            category: p.category.categories,
+            season: p.season.seasons,
             count: p.count,
             color: p.color
           }
