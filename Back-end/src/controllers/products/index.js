@@ -25,6 +25,93 @@ module.exports = {
       return res.status(500).send(error)
     }
   },
+ getAbrigos: async (req,res)=>{
+  try {
+    const findAbrigos = await Products.find({"category": "abrigo"})
+    const findMap = findAbrigos.map((p) => {
+      return {
+        id: p._id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        image: p.image,
+        season: p.season.seasons,
+        category: p.category,
+        count: p.count,
+        color: p.color
+      }
+    })
+    return res.status(200).send(findMap)
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+ },
+
+ getCamisas: async (req,res)=>{
+  try {
+    const findCamisas = await Products.find(category= camisas)
+    const findMap = findCamisas.map((p) => {
+      return {
+        id: p._id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        image: p.image,
+        season: p.season.seasons,
+        category: p.category,
+        count: p.count,
+        color: p.color
+      }
+    })
+    return res.status(200).send(findMap)
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+ },
+
+ getPantalones: async (req,res)=>{
+  try {
+    const findPantalones = await Products.find(category= pantalon)
+    const findMap = findPantalones.map((p) => {
+      return {
+        id: p._id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        image: p.image,
+        season: p.season.seasons,
+        category: p.category,
+        count: p.count,
+        color: p.color
+      }
+    })
+    return res.status(200).send(findMap)
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+ },
+
+ getRemeras: async (req,res)=>{
+  try {
+    const findRemera = await Products.find(category= remeras)
+    const findMap = findRemera.map((p) => {
+      return {
+        id: p._id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        image: p.image,
+        season: p.season.seasons,
+        category: p.category,
+        count: p.count,
+        color: p.color
+      }
+    })
+    return res.status(200).send(findMap)
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+ },
 
   getProduct: async (req, res) => {
     try {

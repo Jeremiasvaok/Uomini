@@ -10,6 +10,10 @@ const {
     orderByPrice,
     orderByColor,
     orderByCategory,
+    getRemeras,
+    getCamisas,
+    getAbrigos,
+    getPantalones
 } = require('../controllers/products');
 
 const {
@@ -34,6 +38,10 @@ const {
 
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
 routes.get('/products', getAllProducts)
+routes.get('/camisas', getCamisas)
+routes.get('/abrigos', getAbrigos)
+routes.get('/pantalones', getPantalones)
+routes.get('/remeras', getRemeras)
 routes.get('/product/:id', getProduct)
 routes.get('/category-products', queryAllProducts)
 routes.get('/order', orderByPrice)
