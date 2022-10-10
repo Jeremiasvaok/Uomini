@@ -5,8 +5,8 @@ const Card = ({ name, id, category, season, color, description, price, count, im
     return (
         <>
             <div>
-                <h1>name: {name}</h1>
-                <Link to={`/details/${id}`}><img src={image} /></Link>
+               <Link to={`/details/${id}`}><img src={image} /></Link>
+                <h1>{name}</h1>
                 <h1>{price}</h1>
                 <h1>{season}</h1>
             </div>

@@ -114,19 +114,26 @@ module.exports = {
  },
 
   getProduct: async (req, res) => {
-    //try {
+    try {
       const {id} = req.params
-     Products.findById(id , (error, data) =>{
-      if(error){
-       console.log(error)
-      }else{
-        console.log(data)
-      }
-    })
-    // } catch (error) {
-    //   console.log(error)
-    //   return res.status(500).send(error)
-    // }
+    //  Products.findById(id , (error, data) =>{
+    //   if(error){
+    //    console.log(error)
+    //   }else{
+    //     console.log(data)
+    //   }
+    // })
+    const data = await Products.findById(id)
+     if(!data){
+      return res.status(404).json({msg : 'No se encontro ningun producto'})
+     }else{
+      return res.status(200).json(data)
+     }
+    
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send(error)
+    }
   },
 
   queryAllProducts: async (req, res) => {
