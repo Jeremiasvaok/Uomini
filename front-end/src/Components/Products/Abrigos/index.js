@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch} from 'react-redux'
+import {  useDispatch, useSelector} from 'react-redux'
 import { getAbrigos } from '../../../Redux/Actions'
 import Card from '../../Card'
 
@@ -7,11 +7,11 @@ const Abrigos = ()=>{
 
     const dispatch = useDispatch()
     const abrigos = useSelector( state => state.getAbrigos)
- 
+      
     useEffect(()=>{
         dispatch(getAbrigos())
-    })
-    console.log(abrigos)
+    },[dispatch])
+    //console.log(abrigos)
     return(
         <div>
          <div>{
@@ -19,15 +19,16 @@ const Abrigos = ()=>{
                 return(
             <div key={p.id}>
                 <Card
-                 id= {p._id}
+                  
+                 id={p.id}
                  name ={p.name}
-                 description= {p.description}
-                 price= {p.price}
-                 image= {p.image}
-                 season= {p.season.seasons}
-                 count= {p.count}
-                 category= {p.category}
-                 color= {p.color}
+                 description={p.description}
+                 price={p.price}
+                 image={p.image}
+                 season={p.season}
+                 count={p.count}
+                 category={p.category}
+                 color={p.color}
                 />
             </div>  
         )})

@@ -49,7 +49,7 @@ module.exports = {
 
  getCamisas: async (req,res)=>{
   try {
-    const findCamisas = await Products.find(category= camisas)
+    const findCamisas = await Products.find({"category": "camisas"})
     const findMap = findCamisas.map((p) => {
       return {
         id: p._id,
@@ -71,7 +71,7 @@ module.exports = {
 
  getPantalones: async (req,res)=>{
   try {
-    const findPantalones = await Products.find(category= pantalon)
+    const findPantalones = await Products.find({"category": "pantalones"})
     const findMap = findPantalones.map((p) => {
       return {
         id: p._id,
@@ -93,7 +93,7 @@ module.exports = {
 
  getRemeras: async (req,res)=>{
   try {
-    const findRemera = await Products.find(category= remeras)
+    const findRemera = await Products.find({"category": "remeras"})
     const findMap = findRemera.map((p) => {
       return {
         id: p._id,
@@ -114,17 +114,19 @@ module.exports = {
  },
 
   getProduct: async (req, res) => {
-    try {
-      const id = req.params.id
-      if (id) {
-        const product = Products.findById(id)
-        return res.status(200).send(product)
-      } else {
-        return res.status(404).send('Producto no encontrado')
+    //try {
+      const {id} = req.params
+     Products.findById(id , (error, data) =>{
+      if(error){
+       console.log(error)
+      }else{
+        console.log(data)
       }
-    } catch (error) {
-      return res.status(500).send(error)
-    }
+    })
+    // } catch (error) {
+    //   console.log(error)
+    //   return res.status(500).send(error)
+    // }
   },
 
   queryAllProducts: async (req, res) => {
@@ -320,7 +322,6 @@ module.exports = {
       const dataTwo = await isAdmin(data.id)
       try {
         const infoName = dataTwo.map((role) => role.name)
-        console.log(datoss[0])
         if (infoName[0] !== 'admin') return res.status(403)
       } catch (error) {
         return res.status(403).send('Necesitas ser administrador para eliminar un producto')
