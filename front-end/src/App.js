@@ -5,11 +5,15 @@ import Camisas from './Components/Products/Camisas'
 import Pantalones from './Components/Products/Pantalones'
 import Remeras from './Components/Products/Remeras'
 import Details from './Components/Details'
+import ShoppingCart from './Components/SoppingCart'
 
 function App() {
   return (
     <div className="App">
       <Home />
+      <hr/>
+      <ShoppingCart />
+      <hr />
       <Routes>
        <Route exact path='/' element />
        <Route exact path='/remeras' element={<Remeras />} />
