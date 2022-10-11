@@ -1,9 +1,16 @@
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { getProducts } from "../../Redux/Actions"
 
 
 const ShoppingCart = () =>{
     const dispatch = useDispatch()
+    const product = useSelector(state => state.getAllProducts)
     const cart = useSelector(state => state.cart)
+    
+    useEffect(()=>{
+        dispatch(getProducts())
+    },[dispatch])
     return(
         <div>
             <h2>carro compreas</h2>
