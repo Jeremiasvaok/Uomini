@@ -20,7 +20,7 @@ const userSchema = new Schema({
         require: true
     },
     favorites: [{
-        ref: "Product",
+        ref: "product",
         type: Schema.Types.ObjectId
     }],
     img: {

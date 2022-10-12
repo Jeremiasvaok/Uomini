@@ -4,11 +4,11 @@ import {
   GET_REMERAS,
   GET_PANTALONES,
   GET_DETAIL,
-  ADD_TO_CARD,
-  CLEAR_CART,
+  ADD_TO_CART,
+  DELETE_CART,
   REMOVE_ALL_FROM_CART,
-  REMOVE_ONE_FROM_CART,
   GET_ALL_PRODUCTS,
+  GET_FAVORITES,
 
 } from '../Actions'
 
@@ -54,40 +54,26 @@ function rootReducer(state = initialState, action) {
         ...state,
         getDetails: action.payload
       }
-    case ADD_TO_CARD:
-      let newIten = state.getAllProducts.find((product) => product.id === action.payload)
-      let itemInCart = state.cart.find((item) => item.id === newIten.id)
-      return {
-        ...state,
-        cart: state.cart.map((item) =>
-          item.id === newIten.id
-            ? { ...item, quantity: itemInCart.quantity + 1 } : item
-        ),
-      }
+    case ADD_TO_CART:
+        return{
+          ...state,
+          cart: action.payload
+        }
     case REMOVE_ALL_FROM_CART:
       return {
         ...state,
         cart: state.cart.find((item) => item.id === action.payload)
 
       }
-    case REMOVE_ONE_FROM_CART: {
-      let itemToDelete = state.cart.find((item) => item.id === action.payload)
-      return itemToDelete.quantity > 1
-        ? {
-          ...state,
-          cart: state.cart.map((item) =>
-            item.id === newIten.id
-              ? { ...item, quantity: itemInCart.quantity + 1 } : item
-          ),
-        } : {
-          ...state,
-          cart: state.cart.find((item) => item.id === action.payload)
-        }
-      }
-    case CLEAR_CART:
+    case DELETE_CART:
       return {
-        initialState
-
+        ...state,
+        cart: state.cart.find((item) => item.id === action.payload)
+      }
+    case GET_FAVORITES:
+      return{
+        ...state,
+        cart: action.payload
       }
     default:
       return state

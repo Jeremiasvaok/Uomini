@@ -33,7 +33,8 @@ const {
 const {
     getFavorites,
     newFavorite,
-    deleteFavorites
+    deleteFavorites,
+    // clearAllFavorites
 } = require('../controllers/favorites')
 
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
@@ -68,5 +69,6 @@ routes.get('/query/user', queryUser)
 routes.get('/favorites/products', getFavorites)
 routes.post('/product/favorite/:idproducts', newFavorite)
 routes.delete('/productos/favorites/dalete/:idProducts', deleteFavorites)
+// routes.delete('/clear/all', clearAllFavorites)
 
 module.exports = routes

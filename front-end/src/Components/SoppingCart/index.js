@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getProducts } from "../../Redux/Actions"
+import { getFavorites, getProducts } from "../../Redux/Actions"
 
 
 const ShoppingCart = () =>{
@@ -9,7 +9,7 @@ const ShoppingCart = () =>{
     const cart = useSelector(state => state.cart)
     
     useEffect(()=>{
-        dispatch(getProducts())
+        dispatch(getFavorites())
     },[dispatch])
     return(
         <div>

@@ -5,15 +5,15 @@ module.exports = {
 
     newFavorite: async (req, res) => {
         try {
-            const { idproducts } = req.paramas
-            const autorization = req.get('autorization')
-            if (!autorization) {
+            const { idproducts } = req.params
+            const authorization = req.get('authorization')
+            if (!authorization) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            if (autorization.split(' ')[0] !== 'berear') {
+            if (authorization.split(' ')[0].toLowerCase()  !== 'berear') {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            const token = autorization.split(' ')[1]
+            const token = authorization.split(' ')[1]
             const data = getTokenData(token)
             if (!data) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
@@ -29,7 +29,7 @@ module.exports = {
             if (!user.favorites) {
                 user.favorites = [idproducts]
                 await user.save()
-                let userUpdate = await user.populate('favourites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
+                let userUpdate = await user.populate('favorites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
                 return res.json({ msg: 'se ha guardado con exito'/*, favs: userUpdate.favourites*/ })
             }
 
@@ -41,8 +41,9 @@ module.exports = {
 
             user.favorites = [...user.favorites, idproducts]
             await user.save()
-            let userUpdate = await user.populate('favourites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
-            return res.json({ msg: 'se ha guardado con exito'/*,favs: userUpdate.favourites*/ })
+            let userUpdate = await user.populate('favorites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
+            console.log(userUpdate)
+            return res.json({ msg: 'Se guardo con exito'/*,favs: userUpdate.favourites*/ })
 
         } catch (error) {
             console.log(error)
@@ -51,28 +52,23 @@ module.exports = {
 
     deleteFavorites: async (req, res) => {
         try {
-            const { idProducts } = req.paramas
-            const autorization = req.get('autorization')
-            if (!autorization) {
+            const { idProducts } = req.params
+            const authorization = req.get('authorization')
+            if (!authorization) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            if (autorization.split(' ')[0] !== 'berear') {
+            if (authorization.split(' ')[0].toLowerCase()  !== 'berear') {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            const token = autorization.split(' ')[1]
+            const token = authorization.split(' ')[1]
             const data = getTokenData(token)
             if (!data) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            const user = await User.findById(data.id).populate("fovorites", {
-                name: 1,
-                description: 1,
-                price: 1,
-                image: 1,
-                category: 1,
-                color: 1,
-                _id: 1
+            const user = await User.findById(data.id).populate('favorites', {
+                name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
             })
+            console.log(user)
             if (!user) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
@@ -80,6 +76,7 @@ module.exports = {
                 return res.json({ msg: 'No se encontro un producto' })
             }
             const favoritos = user.favorites
+            console.log(favoritos)
             user.favorites = favoritos.filter(p => p.id !== idProducts)
             await user.save()
             return res.json({ msg: 'Producto eliminado con exito', favs: user.favorites })
@@ -90,33 +87,56 @@ module.exports = {
     
     getFavorites: async(req, res)=>{
         try {
-            const autorization = req.get('autorization')
-            if(!autorization){
+            const authorization = req.get('authorization')
+            if(!authorization){
                 return res.status(401).json({message: 'No tienes permiso para hacer esto'})
             }
-            if(autorization.split(' ')[0] !== 'berear'){
+            if(authorization.split(' ')[0].toLowerCase()  !== 'berear'){
                 return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
-            const token = autorization.split(' ')[1]
+            const token = authorization.split(' ')[1]
             const data = getTokenData(token)
             if(!data){
                 return res.status(401).json(' No tienes permiso para hacer esto')
             }
-            const user = await User.findById(data.id).populate("fovorites", {
-                name: 1,
-                description: 1,
-                price: 1,
-                image: 1,
-                category: 1,
-                color: 1,
-                _id: 1
+            const user = await User.findById(data.id).populate('favorites', {
+                name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
             })
+            console.log(user)
             if (!user) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
+
             return res.status(200).json(user.favorites)
         } catch (error) {
-            
+            console.log(error)
         }
-    }
+    },
+
+// clearAllFavorites: async (req,res)=>{
+//     try {
+//         const authorization = req.get('authorization')
+//         if(!authorization){
+//             return res.status(401).json('No tienes permiso para hacer esto')
+//         }
+//         if(authorization.split(' ')[0].toLowerCase() !== 'berear'){
+//             return res.status(401).json('No tienes permiso para hacer esto')
+//         }
+//         const token = authorization.split(' ')[1]
+//         const data = getTokenData(token)
+//          if(!data){
+//             return res.status(401).json('No tienes permiso para hacer esto')
+//          }
+//         const user = await User.findById(data.id)
+//         if(!user){
+//             return res.status(404).json('Usuario no encontrado')
+//         }
+     
+//         const clearAll = await User.deleteMany({})
+//         res.send('se elimino todo la verga')
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
 }

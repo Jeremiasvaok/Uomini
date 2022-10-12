@@ -5,10 +5,11 @@ export const GET_CAMISAS = 'GET_CAMISAS';
 export const GET_PANTALONES = 'GET_PANTALONES';
 export const GET_REMERAS = 'GET_REMERAS';
 export const GET_DETAIL = 'GET_DETAIL';
-export const ADD_TO_CARD = 'ADD_TO_CARD'
+export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_ONE_FROM_CART = 'REMOVE_ONE_FROM_CART'
 export const REMOVE_ALL_FROM_CART = 'REMOVE_ALL_FROM_CART'
-export const CLEAR_CART = 'CLEAR_CART'
+export const DELETE_CART = 'DELETE_CART'
+export const GET_FAVORITES = 'GET_FAVORITES'
 
 const instance = axios.create({
   baseURL: 'http://localhost:3001'
@@ -61,27 +62,39 @@ export const getDetails = (id) => async (dispatch) => {
   })
 }
 
-export const addToCart = (id) => (dispatch) => {
+export const getFavorites = () => async(dispatch) =>{
+   const response = await instance.get('/favorites/products')
+   return dispatch({
+    type: GET_FAVORITES,
+    payload: response.data
+   })
+}
+
+export const addToCart = (id) => async(dispatch) => {
+  const response = await instance.post(`/product/favorite/${id}`)
   return dispatch({
-    type: ADD_TO_CARD,
-    payload: id
+    type: ADD_TO_CART,
+    payload: response.data
   })
 }
 
-export const deleteFromCard = (id, all = false) => (dispatch) => {
-  all ?
-    dispatch({
-      type: REMOVE_ALL_FROM_CART,
-      payload: id
-    })
-    : dispatch({
-      type: REMOVE_ONE_FROM_CART,
-      payload: id
-    })
-}
+// export const deleteFromCart = (id, ) => (dispatch) => {
+//   all ?
+//     dispatch({
+//       type: REMOVE_ALL_FROM_CART,
+//       payload: id
+//     })
+//     : dispatch({
+//       type: REMOVE_ONE_FROM_CART,
+//       payload: id
+//     })
+// }
 
-export const clearCard = () => (dispatch) =>{
+export const deleteCart = (id) => async(dispatch) =>{
+  const response = await instance.delete(`/productos/favorites/dalete/${id}`)
   return dispatch({
-    type: CLEAR_CART
+    type: DELETE_CART,
+    payload: response.data
+
   })
 }
