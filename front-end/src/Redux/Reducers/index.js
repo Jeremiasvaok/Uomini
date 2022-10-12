@@ -9,7 +9,7 @@ import {
   REMOVE_ALL_FROM_CART,
   GET_ALL_PRODUCTS,
   GET_FAVORITES,
-
+  SIGNIN_ADMIN
 } from '../Actions'
 
 const initialState = {
@@ -20,6 +20,8 @@ const initialState = {
   getPantalones: [],
   getDetails: [],
   cart: [],
+  signInAdmin:[],
+
 
 };
 function rootReducer(state = initialState, action) {
@@ -74,6 +76,11 @@ function rootReducer(state = initialState, action) {
       return{
         ...state,
         cart: action.payload
+      }
+    case SIGNIN_ADMIN:
+      return{
+        ...state,
+        signInAdmin: action.payload
       }
     default:
       return state

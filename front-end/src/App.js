@@ -6,6 +6,7 @@ import Pantalones from './Components/Products/Pantalones'
 import Remeras from './Components/Products/Remeras'
 import Details from './Components/Details'
 import ShoppingCart from './Components/SoppingCart'
+import SignIn from './Components/From';
 
 function App() {
   return (
@@ -15,12 +16,13 @@ function App() {
       <ShoppingCart />
       <hr />
       <Routes>
-       <Route exact path='/' element />
+       {/* <Route exact path='/' element /> */}
        <Route exact path='/remeras' element={<Remeras />} />
        <Route exact path='/pantalones' element={<Pantalones />}/>
        <Route exact path='/abrigos' element={<Abrigos />} />
        <Route exact path='/camisas' element={<Camisas/>}/>
        <Route exact path='/details/:id' element={<Details/>} />
+       <Route exact path='/signIn' element={<SignIn/>} />
     </Routes>
     </div>
   );

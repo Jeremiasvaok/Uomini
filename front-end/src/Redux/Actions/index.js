@@ -10,6 +10,7 @@ export const REMOVE_ONE_FROM_CART = 'REMOVE_ONE_FROM_CART'
 export const REMOVE_ALL_FROM_CART = 'REMOVE_ALL_FROM_CART'
 export const DELETE_CART = 'DELETE_CART'
 export const GET_FAVORITES = 'GET_FAVORITES'
+export const SIGNIN_ADMIN = 'SIGNIN_ADMIN'
 
 const instance = axios.create({
   baseURL: 'http://localhost:3001'
@@ -96,5 +97,13 @@ export const deleteCart = (id) => async(dispatch) =>{
     type: DELETE_CART,
     payload: response.data
 
+  })
+}
+
+export const signInAdmin = ( data) => async(dispatch) =>{
+  const response = await instance.post('/signin/admin', data)
+  return dispatch({
+    type: SIGNIN_ADMIN,
+    payload: response.data
   })
 }
