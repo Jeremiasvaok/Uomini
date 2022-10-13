@@ -6,8 +6,8 @@ const SignIn = () => {
 
     const dispatch = useDispatch()
     const [input, setInput] = useState({
-        email: " ",
-        password: " "
+        email: "",
+        password: ""
     })
     console.log(input)
     const handleChange = (e) => {

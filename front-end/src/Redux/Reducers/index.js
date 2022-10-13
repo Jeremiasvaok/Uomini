@@ -80,7 +80,7 @@ function rootReducer(state = initialState, action) {
     case SIGNIN_ADMIN:
       return{
         ...state,
-        signInAdmin: action.payload
+        signInAdmin: console.log(action.payload)
       }
     default:
       return state
