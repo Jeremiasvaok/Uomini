@@ -16,6 +16,12 @@ const instance = axios.create({
   baseURL: 'http://localhost:3001'
 });
 
+let token = null
+
+export const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
+
 export const getProducts = () => async (dispatch)=>{
   const response = await instance.get('/products')
   return dispatch({
@@ -64,7 +70,11 @@ export const getDetails = (id) => async (dispatch) => {
 }
 
 export const getFavorites = () => async(dispatch) =>{
-   const response = await instance.get('/favorites/products')
+  const config = {
+    headers: { Authorization: token },
+  }
+
+   const response = await instance.get('/favorites/products', config)
    return dispatch({
     type: GET_FAVORITES,
     payload: response.data

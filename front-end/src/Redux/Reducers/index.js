@@ -75,12 +75,12 @@ function rootReducer(state = initialState, action) {
     case GET_FAVORITES:
       return{
         ...state,
-        cart: action.payload
+        cart: console.log(action.payload)
       }
     case SIGNIN_ADMIN:
       return{
         ...state,
-        signInAdmin: console.log(action.payload)
+        signInAdmin: action.payload
       }
     default:
       return state

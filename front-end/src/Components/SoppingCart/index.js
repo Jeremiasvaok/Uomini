@@ -7,9 +7,11 @@ const ShoppingCart = () =>{
     const dispatch = useDispatch()
     const product = useSelector(state => state.getAllProducts)
     const cart = useSelector(state => state.cart)
-    
+    // const header = useSelector(state => state.signInAdmin)
+     
     useEffect(()=>{
         dispatch(getFavorites())
+
     },[dispatch])
     return(
         <div>
