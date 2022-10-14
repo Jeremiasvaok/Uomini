@@ -7,11 +7,11 @@ const SignIn = () => {
 
     const dispatch = useDispatch()
     const {token} = useSelector(state => state.signInAdmin)
-    console.log(token)
     const [input, setInput] = useState({
         email: "",
         password: ""
     })
+
      //const [user, setUser] = useState({})
      setToken(token)
     // useEffect(() => {

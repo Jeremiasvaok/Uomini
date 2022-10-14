@@ -17,9 +17,9 @@ const Remeras = () => {
             <div>{
                 !remeras > 0 ? (<h1>No hay nada</h1>) : remeras && remeras?.map((p) => {
                     return (
-                        <div key={p.id}>
+                        <div key={p._id}>
                             <Card
-                                id={p.id}
+                                id={p._id}
                                 name={p.name}
                                 description={p.description}
                                 price={p.price}

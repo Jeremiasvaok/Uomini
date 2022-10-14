@@ -5,7 +5,7 @@ import Camisas from './Components/Products/Camisas'
 import Pantalones from './Components/Products/Pantalones'
 import Remeras from './Components/Products/Remeras'
 import Details from './Components/Details'
-import ShoppingCart from './Components/SoppingCart'
+import MapFavorite from './Components/SoppingCart/mapFavorite.js'
 import SignIn from './Components/From';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
        <Route exact path='/camisas' element={<Camisas/>}/>
        <Route exact path='/details/:id' element={<Details/>} />
        <Route exact path='/signIn' element={<SignIn/>} />
-       <Route exact path='/carro' element={<ShoppingCart />} />
+       <Route exact path='/carro' element={<MapFavorite />} />
     </Routes>
     </div>
   );

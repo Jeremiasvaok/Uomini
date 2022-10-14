@@ -12,17 +12,18 @@ export const DELETE_CART = 'DELETE_CART'
 export const GET_FAVORITES = 'GET_FAVORITES'
 export const SIGNIN_ADMIN = 'SIGNIN_ADMIN'
 
+
 const instance = axios.create({
   baseURL: 'http://localhost:3001'
 });
 
-let token = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ4MzAzZWFjOWEzYmMxZDY2ZDlkMCIsImlhdCI6MTY2NTY4ODEyNiwiZXhwIjoxNjk3MjI0MTI2fQ.6RXTmHujZJQGn3Lm0-0u_h8flZdnWUNxv3UShykw8XQ`
+// let token = null //`bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ4MzAzZWFjOWEzYmMxZDY2ZDlkMCIsImlhdCI6MTY2NTY4ODEyNiwiZXhwIjoxNjk3MjI0MTI2fQ.6RXTmHujZJQGn3Lm0-0u_h8flZdnWUNxv3UShykw8XQ`
 
-export const setToken = newToken => {
- var token1 = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ4MzAzZWFjOWEzYmMxZDY2ZDlkMCIsImlhdCI6MTY2NTY4ODEyNiwiZXhwIjoxNjk3MjI0MTI2fQ.6RXTmHujZJQGn3Lm0-0u_h8flZdnWUNxv3UShykw8XQ`
+let token = null
+export const setToken = (newToken) => {
+  token = `bearer ${newToken}`
 }
-
-
+setToken()
 export const getProducts = () => async (dispatch)=>{
   const response = await instance.get('/products')
   return dispatch({
@@ -103,7 +104,10 @@ export const addToCart = (id) => async(dispatch) => {
 // }
 
 export const deleteCart = (id) => async(dispatch) =>{
-  const response = await instance.delete(`/productos/favorites/dalete/${id}`)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await instance.delete(`/productos/favorites/dalete/${id}`, config)
   return dispatch({
     type: DELETE_CART,
     payload: response.data

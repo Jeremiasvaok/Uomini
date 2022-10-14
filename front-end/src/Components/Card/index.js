@@ -16,7 +16,7 @@ const Card = ({ name, id, category, season, color, description, price, count, im
                 <h1>{name}</h1>
                 <h1>{price}</h1>
                 <h1>{season}</h1>
-                <button type='submit' onClick={() => handleCart(id)} className='botonn1'>Delete</button>
+                <button type='submit' onClick={() => handleCart(id)} className='botonn1'>Fav</button>
             </div>
         </>
     )

@@ -1,31 +1,28 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAbrigos } from '../../../Redux/Actions'
-import Card from '../../Card'
+import { useSelector, useDispatch } from "react-redux"
+import { getFavorites } from "../../Redux/Actions"
+import ShoppingCart from './index'
 
-const Abrigos = () => {
-
+const MapFavorite = () => {
+    const cart = useSelector(state => state.cart)
     const dispatch = useDispatch()
-    const abrigos = useSelector(state => state.getAbrigos)
-
-    useEffect(() => {
-        dispatch(getAbrigos())
-    }, [dispatch])
-    //console.log(abrigos)
+    console.log(cart,'CAET')
+    console.log(cart.name)
+    useEffect(()=>{
+        dispatch(getFavorites())
+    },[dispatch])
     return (
         <div>
             <div>{
-                !abrigos.length > 0 ? (<h1>No hay nada</h1>) : abrigos && abrigos.map((p) => {
+                !cart.length > 0 ? (<h1>No hay nada</h1>) : cart && cart.map((p) => {
                     return (
                         <div key={p._id}>
-                            <Card
+                            <ShoppingCart
                                 id={p._id}
                                 name={p.name}
                                 description={p.description}
                                 price={p.price}
                                 image={p.image}
-                                season={p.season}
-                                count={p.count}
                                 category={p.category}
                                 color={p.color}
                             />
@@ -33,10 +30,8 @@ const Abrigos = () => {
                     )
                 })
             }
-
             </div>
         </div>
     )
 }
-
-export default Abrigos 
+export default MapFavorite

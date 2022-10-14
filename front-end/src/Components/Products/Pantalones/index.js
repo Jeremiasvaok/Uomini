@@ -16,9 +16,9 @@ const Pantalones = () => {
             <div>{
                 !pantalon > 0 ? (<h1>No hay nada</h1>) : pantalon && pantalon?.map(p => {
                     return (
-                        <div key={p.id}>
+                        <div key={p._id}>
                             <Card
-                                id={p.id}
+                                id={p._id}
                                 name={p.name}
                                 description={p.description}
                                 price={p.price}

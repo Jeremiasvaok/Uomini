@@ -1,25 +1,22 @@
-import { useEffect } from "react"
+//import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getFavorites, getProducts } from "../../Redux/Actions"
+import { deleteCart } from "../../Redux/Actions"
 
 
-const ShoppingCart = () =>{
-    const dispatch = useDispatch()
-    const product = useSelector(state => state.getAllProducts)
-    const cart = useSelector(state => state.cart)
-    // const header = useSelector(state => state.signInAdmin)
-      console.log(cart)
-    useEffect(()=>{
-        dispatch(getFavorites())
 
-    },[dispatch])
+const ShoppingCart = ({name, id, category, color, description, price, image }) =>{
+     const dispatch = useDispatch()
+    // const product = useSelector(state => state.getAllProducts)
+   
+    const handleDeleteFav = (id)=>{
+        dispatch(deleteCart(id))
+        console.log(id)
+    }
     return(
         <div>
-            <h2>carro compreas</h2>
-            <h3>Products</h3> 
-             <article className="box"></article>
-             <h3>Carrito</h3>
-             <article className="box"></article>
+              <h4>{name}</h4>
+              <img src={image} />
+              <button onClick={()=> handleDeleteFav(id)}>delete</button>
         </div>
     )
 }
