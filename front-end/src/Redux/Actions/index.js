@@ -16,10 +16,10 @@ const instance = axios.create({
   baseURL: 'http://localhost:3001'
 });
 
-let token = null
+let token = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ4MzAzZWFjOWEzYmMxZDY2ZDlkMCIsImlhdCI6MTY2NTY4ODEyNiwiZXhwIjoxNjk3MjI0MTI2fQ.6RXTmHujZJQGn3Lm0-0u_h8flZdnWUNxv3UShykw8XQ`
 
 export const setToken = newToken => {
-  token = `bearer ${newToken}`
+ var token1 = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ4MzAzZWFjOWEzYmMxZDY2ZDlkMCIsImlhdCI6MTY2NTY4ODEyNiwiZXhwIjoxNjk3MjI0MTI2fQ.6RXTmHujZJQGn3Lm0-0u_h8flZdnWUNxv3UShykw8XQ`
 }
 
 
@@ -74,7 +74,7 @@ export const getFavorites = () => async(dispatch) =>{
   const config = {
     headers: { Authorization: token },
   }
-  console.log(config)
+
    const response = await instance.get('/favorites/products', config)
    return dispatch({
     type: GET_FAVORITES,
