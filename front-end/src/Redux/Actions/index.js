@@ -22,6 +22,7 @@ export const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
+
 export const getProducts = () => async (dispatch)=>{
   const response = await instance.get('/products')
   return dispatch({
@@ -73,7 +74,7 @@ export const getFavorites = () => async(dispatch) =>{
   const config = {
     headers: { Authorization: token },
   }
-
+  console.log(config)
    const response = await instance.get('/favorites/products', config)
    return dispatch({
     type: GET_FAVORITES,

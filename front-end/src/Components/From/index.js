@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAdmin, setToken } from "../../Redux/Actions";
 
@@ -6,14 +6,22 @@ import { signInAdmin, setToken } from "../../Redux/Actions";
 const SignIn = () => {
 
     const dispatch = useDispatch()
-    const token = useSelector(state => state.signInAdmin)
+    const {token} = useSelector(state => state.signInAdmin)
     console.log(token)
     const [input, setInput] = useState({
         email: "",
         password: ""
     })
-    const [user, setUser] = useState({})
-
+     //const [user, setUser] = useState({})
+     setToken(token)
+    // useEffect(() => {
+    //     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    //     if (loggedUserJSON) {
+    //       const user = JSON.parse(loggedUserJSON)
+    //       setUser(user)
+    //       setToken(token)
+    //     }
+    //   }, [])
     const handleChange = (e) => {
         e.preventDefault();
         setInput(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -23,9 +31,12 @@ const SignIn = () => {
         e.preventDefault();
         try {
             if (input.email && input.password) {
-                const user = dispatch(signInAdmin(input))
-                 setUser(user)
-                 setToken(token)
+                dispatch(signInAdmin(input))
+                // setUser(user)
+                //  setToken(token)
+                //  window.localStorage.setItem(
+                //     'loggedNoteappUser', JSON.stringify(user)
+                //   ) 
                 setInput({
                     email: "",
                     password: ""

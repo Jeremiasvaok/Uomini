@@ -10,7 +10,7 @@ module.exports = {
             if (!authorization) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            if (authorization.split(' ')[0].toLowerCase()  !== 'berear') {
+            if (authorization.split(' ')[0].toLowerCase()  !== 'bearer') {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
             const token = authorization.split(' ')[1]
@@ -57,7 +57,7 @@ module.exports = {
             if (!authorization) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            if (authorization.split(' ')[0].toLowerCase()  !== 'berear') {
+            if (authorization.split(' ')[0].toLowerCase()  !== 'bearer') {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
             const token = authorization.split(' ')[1]
@@ -89,9 +89,9 @@ module.exports = {
         try {
             const authorization = req.get('authorization')
             if(!authorization){
-                return res.status(401).json({message: 'No tienes permiso para hacer esto'})
+                return res.status(401).json({message: 'No tienes permiso para hacer estoLL'})
             }
-            if(authorization.split(' ')[0].toLowerCase()  !== 'berear'){
+            if(authorization.split(' ')[0].toLowerCase()  !== 'bearer'){
                 return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
             const token = authorization.split(' ')[1]
