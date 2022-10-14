@@ -110,7 +110,7 @@ export const deleteCart = (id) => async(dispatch) =>{
   const response = await instance.delete(`/productos/favorites/dalete/${id}`, config)
   return dispatch({
     type: DELETE_CART,
-    payload: response.data
+    payload: response.data.id
 
   })
 }
