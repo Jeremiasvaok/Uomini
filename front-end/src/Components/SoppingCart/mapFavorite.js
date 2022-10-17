@@ -6,8 +6,7 @@ import ShoppingCart from './index'
 const MapFavorite = () => {
     const cart = useSelector(state => state.cart)
     const dispatch = useDispatch()
-    console.log(cart,'CAET')
-    console.log(cart.name)
+
     useEffect(()=>{
         dispatch(getFavorites())
     },[dispatch])

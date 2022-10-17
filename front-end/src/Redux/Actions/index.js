@@ -84,7 +84,10 @@ export const getFavorites = () => async(dispatch) =>{
 }
 
 export const addToCart = (id) => async(dispatch) => {
-  const response = await instance.post(`/product/favorite/${id}`)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await instance.post(`/product/favorite/${id}`, config)
   return dispatch({
     type: ADD_TO_CART,
     payload: response.data

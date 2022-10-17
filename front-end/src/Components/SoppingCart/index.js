@@ -10,7 +10,6 @@ const ShoppingCart = ({name, id, category, color, description, price, image }) =
    
     const handleDeleteFav = (id)=>{
         dispatch(deleteCart(id))
-        console.log(id)
     }
     return(
         <div>

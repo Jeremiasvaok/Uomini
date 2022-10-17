@@ -6,7 +6,7 @@ import { getDetails } from "../../Redux/Actions"
 const  Details= () => {
 
   const {detailsId} = useParams()
-  console.log(detailsId)
+  
   const dispatch = useDispatch()
   const details = useSelector(state => state.getDetails)  
   useEffect(()=>{

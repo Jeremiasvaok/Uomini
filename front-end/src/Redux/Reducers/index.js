@@ -20,6 +20,7 @@ const initialState = {
   getPantalones: [],
   getDetails: [],
   cart: [],
+  addCat:[],
   signInAdmin:[],
   deletecart:[]
 
@@ -60,7 +61,7 @@ function rootReducer(state = initialState, action) {
     case ADD_TO_CART:
         return{
           ...state,
-          cart: action.payload
+          addCat: console.log(action.payload)
         }
     // case REMOVE_ALL_FROM_CART:
     //   return {
