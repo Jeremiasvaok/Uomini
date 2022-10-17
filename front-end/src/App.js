@@ -20,7 +20,7 @@ function App() {
        <Route exact path='/pantalones' element={<Pantalones />}/>
        <Route exact path='/abrigos' element={<Abrigos />} />
        <Route exact path='/camisas' element={<Camisas/>}/>
-       <Route exact path='/details/:id' element={<Details/>} />
+       <Route exact path='/details/:detailsId' element={<Details/>} />
        <Route exact path='/signIn' element={<SignIn/>} />
        <Route exact path='/carro' element={<MapFavorite />} />
     </Routes>

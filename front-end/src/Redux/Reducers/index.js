@@ -21,6 +21,7 @@ const initialState = {
   getDetails: [],
   cart: [],
   signInAdmin:[],
+  deletecart:[]
 
 
 };
@@ -61,15 +62,16 @@ function rootReducer(state = initialState, action) {
           ...state,
           cart: action.payload
         }
-    case REMOVE_ALL_FROM_CART:
-      return {
-        ...state,
-        cart: state.cart.find((item) => item.id !== action.payload)
+    // case REMOVE_ALL_FROM_CART:
+    //   return {
+    //     ...state,
+    //     cart: state.cart.find((item) => item.id !== action.payload)
 
-      }
+    //   }
     case DELETE_CART:
       return {
         ...state,
+        deletecart: action.payload,
         cart: state.cart.filter((item) => item.id !== action.payload)
       }
     case GET_FAVORITES:
