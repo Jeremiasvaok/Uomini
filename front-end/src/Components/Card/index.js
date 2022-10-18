@@ -6,7 +6,7 @@ import { addToCart,setToken } from "../../Redux/Actions"
 const Card = ({ name, id, category, season, color, description, price, count, image }) => {
     const dispatch = useDispatch()
     const {token} = useSelector(state => state.signInAdmin)
-    setToken(token)
+    
     const handleFavCart =(id) => {
         dispatch(addToCart(id))
         console.log(token)

@@ -13,15 +13,16 @@ const SignIn = () => {
     })
 
      //const [user, setUser] = useState({})
-     setToken(token)
-    // useEffect(() => {
-    //     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
-    //     if (loggedUserJSON) {
-    //       const user = JSON.parse(loggedUserJSON)
-    //       setUser(user)
-    //       setToken(token)
-    //     }
-    //   }, [])
+    // setToken(token)
+    useEffect(() => {
+        const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+        console.log(loggedUserJSON)
+        if (loggedUserJSON) {
+          const user = JSON.parse(loggedUserJSON)
+          setUser(user)
+          setToken(token)
+        }
+      }, [])
     const handleChange = (e) => {
         e.preventDefault();
         setInput(prev => ({ ...prev, [e.target.name]: e.target.value }))

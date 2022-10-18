@@ -8,15 +8,15 @@ module.exports = {
             const { idproducts } = req.params
             const authorization = req.get('authorization')
             if (!authorization) {
-                return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
+                return res.status(401).json({ message: 'No tienes permisos para hacer estoS' })
             }
             if (authorization.split(' ')[0].toLowerCase()  !== 'bearer') {
-                return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
+                return res.status(401).json({ message: 'No tienes permisos para hacer estol' })
             }
             const token = authorization.split(' ')[1]
             const data = getTokenData(token)
             if (!data) {
-                return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
+                return res.status(401).json({ message: 'No tienes permisos para hacer estom' })
             }
             const user = await User.findById(data.id)
             if (!user) {

@@ -23,7 +23,7 @@ let token = null
 export const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
-setToken()
+
 export const getProducts = () => async (dispatch)=>{
   const response = await instance.get('/products')
   return dispatch({
@@ -73,7 +73,7 @@ export const getDetails = (id) => async (dispatch) => {
 
 export const getFavorites = () => async(dispatch) =>{
   const config = {
-    headers: { Authorization: token },
+    headers : { Authorization: token },
   }
 
    const response = await instance.get('/favorites/products', config)
@@ -84,10 +84,11 @@ export const getFavorites = () => async(dispatch) =>{
 }
 
 export const addToCart = (id) => async(dispatch) => {
-  const config = {
+  const configs = {
     headers: { Authorization: token },
   }
-  const response = await instance.post(`/product/favorite/${id}`, config)
+
+  const response = await instance.post(`/product/favorite/${id}`, configs)
   return dispatch({
     type: ADD_TO_CART,
     payload: response.data
@@ -106,6 +107,7 @@ export const addToCart = (id) => async(dispatch) => {
 //     })
 // }
 
+setToken()
 export const deleteCart = (id) => async(dispatch) =>{
   const config = {
     headers: { Authorization: token },
@@ -125,3 +127,4 @@ export const signInAdmin = ( data) => async(dispatch) =>{
     payload: response.data
   })
 }
+// setToken()
