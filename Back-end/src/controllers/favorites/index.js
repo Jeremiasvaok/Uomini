@@ -7,20 +7,23 @@ module.exports = {
         try {
             const { idproducts } = req.params
             const authorization = req.get('authorization')
-            if (!authorization) {
-                return res.status(401).json({ message: 'No tienes permisos para hacer estoS' })
+            if(!authorization){
+                return res.status(401).json({message: 'No tienes permiso para hacer estoLL'})
             }
-            if (authorization.split(' ')[0].toLowerCase()  !== 'bearer') {
-                return res.status(401).json({ message: 'No tienes permisos para hacer estol' })
+            if(authorization.split(' ')[0].toLowerCase()  !== 'bearer'){
+                return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
             const token = authorization.split(' ')[1]
             const data = getTokenData(token)
-            if (!data) {
-                return res.status(401).json({ message: 'No tienes permisos para hacer estom' })
+            if(!data){
+                return res.status(401).json(' No tienes permiso para hacer esto')
             }
-            const user = await User.findById(data.id)
+            const user = await User.findById(data.id).populate('favorites', {
+                name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
+            })
+            console.log(user)
             if (!user) {
-                return res.status(404).json({ message: 'No se ha encontrado usuario' })
+                return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
             console.log(user.favorites)
             if (!idproducts.length || !idproducts) {

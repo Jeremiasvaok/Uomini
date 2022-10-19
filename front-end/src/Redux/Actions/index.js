@@ -56,7 +56,11 @@ export const getPantalones = () => async (dispatch) => {
 }
 
 export const getRemeras = () => async (dispatch) => {
-  const response = await instance.get('/remeras')
+  const config = {
+    headers : { Authorization: token },
+  }
+  console.log(config)
+  const response = await instance.get('/remeras', config)
   return dispatch({
     type: GET_REMERAS,
     payload: response.data
@@ -84,15 +88,21 @@ export const getFavorites = () => async(dispatch) =>{
 }
 
 export const addToCart = (id) => async(dispatch) => {
-  const configs = {
-    headers: { Authorization: token },
+  try {
+  const config= {
+    headers : { Authorization: token },
   }
-
-  const response = await instance.post(`/product/favorite/${id}`, configs)
+  console.log(config)
+  const {response} = await instance.post(`/product/favorite/${id}`, config)
+  console.log(response)
   return dispatch({
     type: ADD_TO_CART,
-    payload: response.data
+    payload: response
   })
+} catch (error) {
+  alert(error)
+  console.log(error)
+}
 }
 
 // export const deleteFromCart = (id, ) => (dispatch) => {
@@ -107,17 +117,23 @@ export const addToCart = (id) => async(dispatch) => {
 //     })
 // }
 
-setToken()
+// setToken()
 export const deleteCart = (id) => async(dispatch) =>{
-  const config = {
-    headers: { Authorization: token },
+  try {
+    const config = {
+      headers: { Authorization: token },
+    }
+    const response = await instance.delete(`/productos/favorites/dalete/${id}`, config)
+    return dispatch({
+      type: DELETE_CART,
+      payload: response.data.id
+  
+    })
+  } catch (error) {
+    alert('error aqui')
+    console.log(error)
   }
-  const response = await instance.delete(`/productos/favorites/dalete/${id}`, config)
-  return dispatch({
-    type: DELETE_CART,
-    payload: response.data.id
-
-  })
+  
 }
 
 export const signInAdmin = ( data) => async(dispatch) =>{
@@ -127,4 +143,5 @@ export const signInAdmin = ( data) => async(dispatch) =>{
     payload: response.data
   })
 }
+
 // setToken()
