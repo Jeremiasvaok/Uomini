@@ -81,24 +81,24 @@ export const getFavorites = () => async(dispatch) =>{
   }
 
    const response = await instance.get('/favorites/products', config)
+   console.log(response)
    return dispatch({
     type: GET_FAVORITES,
     payload: response.data
    })
 }
 
-export const addToCart = (id) => async(dispatch) => {
+export const addToCart = (id, userToken) => async(dispatch) => {
   try {
   const config= {
-    headers : { Authorization: token },
+    headers : { Authorization: `Bearer ${userToken}` },
   }
-  console.log(config)
-  const {response} = await instance.post(`/product/favorite/${id}`, config)
-  console.log(response)
+  const {response} = await instance.post(`/product/favorite/`, config)
   return dispatch({
     type: ADD_TO_CART,
-    payload: response
+    payload: response.data
   })
+  
 } catch (error) {
   alert(error)
   console.log(error)

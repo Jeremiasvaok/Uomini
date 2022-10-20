@@ -11,7 +11,10 @@ const SignIn = () => {
         email: "",
         password: ""
     })
-
+    const userToken = token
+    useEffect(()=>{
+        console.log(userToken)
+    })
      const [user, setUser] = useState({})
     
     setToken(token)
