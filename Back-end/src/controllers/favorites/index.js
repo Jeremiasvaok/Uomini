@@ -46,7 +46,7 @@ module.exports = {
             await user.save()
             let userUpdate = await user.populate('favorites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
             console.log(userUpdate)
-            return res.json({ msg: 'Se guardo con exito'/*,favs: userUpdate.favourites*/ })
+            return res.json({ msg: 'Se guardo con exito', favs: userUpdate.favourites})
 
         } catch (error) {
             console.log(error)

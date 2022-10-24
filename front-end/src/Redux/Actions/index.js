@@ -61,6 +61,7 @@ export const getRemeras = () => async (dispatch) => {
   }
   console.log(config)
   const response = await instance.get('/remeras', config)
+  console.log(response)
   return dispatch({
     type: GET_REMERAS,
     payload: response.data
@@ -90,10 +91,11 @@ export const getFavorites = () => async(dispatch) =>{
 
 export const addToCart = (id, userToken) => async(dispatch) => {
   try {
-  const config= {
-    headers : { Authorization: `Bearer ${userToken}` },
+  let options= {
+    headers :{ Authorization: `bearer ${userToken}` },
   }
-  const {response} = await instance.post(`/product/favorite/`, config)
+  const {response} = await instance.post(`/product/favorite/${id}`, options)
+  console.log(response.data)
   return dispatch({
     type: ADD_TO_CART,
     payload: response.data
@@ -101,7 +103,8 @@ export const addToCart = (id, userToken) => async(dispatch) => {
   
 } catch (error) {
   alert(error)
-  console.log(error)
+ console.log(error)
+  
 }
 }
 
@@ -124,6 +127,7 @@ export const deleteCart = (id) => async(dispatch) =>{
       headers: { Authorization: token },
     }
     const response = await instance.delete(`/productos/favorites/dalete/${id}`, config)
+    console.log(response)
     return dispatch({
       type: DELETE_CART,
       payload: response.data.id
