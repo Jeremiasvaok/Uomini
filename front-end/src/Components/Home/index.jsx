@@ -1,9 +1,9 @@
-import Header from '../Header'
+import NavBar from '../NavBar'
 
 const Landing = ()=>{
     return(
         <div>
-            <Header />
+            <NavBar />
         </div>
     )
 }
