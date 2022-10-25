@@ -10,7 +10,7 @@ const Card = ({ name, id, category, season, color, description, price, count, im
     const userToken = token
     const handleFavCart =(id) => {
         dispatch(addToCart(id, userToken))
-        console.log(token)
+        //console.log(token)
     }
     
     return (
