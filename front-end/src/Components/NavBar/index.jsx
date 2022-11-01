@@ -1,5 +1,5 @@
-
 import { Link } from "react-router-dom"
+import styles from './navbar.module.css'
 
 const NavBar = () => {
    
@@ -7,7 +7,7 @@ const NavBar = () => {
         <div>
             <header>
                 <div>
-                    <ul>
+                    <ul className={styles.conteiner}>
                     <Link to='/remeras'><li>Remeras</li></Link>
                     <Link to='/pantalones'><li>Pantalones</li></Link>
                     <Link to='/abrigos'><li>Abrigos</li></Link>
@@ -16,7 +16,7 @@ const NavBar = () => {
                     </ul>
                 </div>
             </header>
-            <div className={classes.offset}></div>
+            <div></div>
         </div>
     )
 }
