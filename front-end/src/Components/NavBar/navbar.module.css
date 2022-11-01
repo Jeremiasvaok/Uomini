@@ -1,8 +1,33 @@
-.conteiner{
-    list-style: none;
-    background: blue;
-    color: red;
+
+.header{
+    background: rgb(139, 139, 139);
+    font-family: 'Century Gothic', 'CenturyGothic', 'AppleGothic', sans-serif; 
+    margin: auto;
+    width: 500px;
 }
-li{
-    text-decoration: none;
+
+ul, ol{
+    list-style: none;
+}
+.conteiner li {
+     background: black;
+     color: white;
+     text-decoration: none;
+     padding: 10px 15px;
+}
+.conteiner li:hover{
+    background-color: #434343;
+}
+.conteiner > li{
+    float:left;
+}
+
+.conteiner li ul{
+    display: none;
+    position: absolute;
+    min-width: 140px;
+}
+
+.conteiner li:hover > ul{
+  display: block;
 }
