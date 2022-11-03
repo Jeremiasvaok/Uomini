@@ -4,9 +4,12 @@ import styles from './navbar.module.css'
 const NavBar = () => {
 
     return (
-        <div clasName={styles.header}>
-            <div className={styles.contenedo1}>
-                <ul className={styles.conteiner}>
+        <>
+        <header>
+            <div className={styles.contenedor_menu}>
+                <div className={styles.menu}>
+                    <nav>
+                  <ul className={styles.conteiner}>
                     <li><Link to='/remeras'>Remeras</Link>
                     <ul>
                         <li>SubMenu</li>
@@ -47,8 +50,11 @@ const NavBar = () => {
                     </ul>
                     </li>
                 </ul>
+                </nav>
+                </div>
             </div>
-        </div>
+            </header>
+        </>
     )
 }
 
