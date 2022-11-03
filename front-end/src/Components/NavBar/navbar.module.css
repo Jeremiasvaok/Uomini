@@ -11,68 +11,57 @@ header{
     width: 100%;
     height: 70px;
     background-color: blue;
+    padding: 0px 20px;
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .header{
-    background: rgb(248, 0, 0);
-    font-family: 'Century Gothic', 'CenturyGothic', 'AppleGothic', sans-serif; 
-    
-    
-    
-    text-align: center;
-    justify-content: center;
-
-} 
-.contenedo1{
-    background-color: blue;
-    text-align: center;
-    justify-content: center;
-    display: inline;
+.menu{
+    max-width: 1200px;
+    margin: auto;
+    height: 100%;
 }
+nav{
+    height: 100%;
 
-ul, ol{
+}
+ nav > ul{
+    height: 100%;
+    display: flex;
+   
+ }
+
+ nav > ul > li{
+    height: 100%;
     list-style: none;
+    position: relative;
+    align-items: center;
+    padding: 14px;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all 300ms ease;
+ }
+
+nav > ul > li:hover{
+ transform: scale(1.1);
+ background-color: aqua;
+ box-shadow: 0px 0px 10px 0px rgba(0, 0, 0,0.5);
 }
 
-.conteiner li {
-      background: rgb(177, 160, 160); 
-     color: white;
-     text-decoration: none;
-     padding: 30px 17px;
-    
+/*SUBMENU*/
+
+nav ul li ul{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: blanchedalmond;
+    box-shadow:0px 0px 10px 0px rgba(0, 0, 0,0.5);
 }
 
-.conteiner li:hover{
-    background-color: #434343;
-}
-.conteiner > li{
-float: calc(50px, 50px);
-    
-}
 
-.conteiner li ul{
-    display: none;
-    position: absolute;
-    min-width: 140px;
-}
 
-.conteiner li:hover > ul{
-  display: block;
-}  */
+
+
+
+
+
+
