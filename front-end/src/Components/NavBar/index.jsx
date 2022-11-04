@@ -50,7 +50,8 @@ const NavBar = () => {
                     <li><a href='#'>SubMenu</a></li>
                     </ul>
                     </li> */}
-                    <span>{home}</span>
+                    {/* <span>{home}</span> */}
+                    <img src={home} />
                 </ul>
                 </nav>
                 </div>
