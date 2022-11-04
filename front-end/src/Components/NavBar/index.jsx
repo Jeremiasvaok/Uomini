@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import styles from './navbar.module.css'
-import home from "../../img/hogar.png"
+import home from "../../img/imagen.jpg"
 
 const NavBar = () => {
 
@@ -50,7 +50,7 @@ const NavBar = () => {
                     <li><a href='#'>SubMenu</a></li>
                     </ul>
                     </li> */}
-                    <i>{home}</i>
+                    <span>{home}</span>
                 </ul>
                 </nav>
                 </div>
