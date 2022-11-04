@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import styles from './navbar.module.css'
+import home from "../../img/hogar.png"
 
 const NavBar = () => {
 
@@ -42,13 +43,14 @@ const NavBar = () => {
                     </ul>
                     </li>
 
-                    <li><Link to='/carro'>Carro</Link>
+                    {/* <li><Link to='/carro'>Carro</Link>
                     <ul>
                     <li><a href='#'>SubMenu</a></li>
                     <li><a href='#'>SubMenu</a></li>
                     <li><a href='#'>SubMenu</a></li>
                     </ul>
-                    </li>
+                    </li> */}
+                    <i>{home}</i>
                 </ul>
                 </nav>
                 </div>

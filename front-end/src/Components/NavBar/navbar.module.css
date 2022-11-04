@@ -35,9 +35,10 @@ nav{
     list-style: none;
     position: relative;
     align-items: center;
-    padding: 14px;
+    padding: 30px;
+    margin-left: 70px;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 20px;
     transition: all 300ms ease;
  }
 
@@ -57,8 +58,8 @@ nav ul li ul{
     position: absolute;
     top: 20px;
     left: -5px;
-    /* visibility: hidden;
-    opacity: 0; */
+    visibility: hidden;
+    opacity: 0;
     padding: 14px 0px;
     box-shadow:0px 0px 10px 0px rgba(0, 0, 0,0.5);
     z-index: 10;
@@ -83,7 +84,26 @@ nav ul li ul:before{
   left: 20px;
 }
 
+nav ul li ul li{
+ display: block;
+ color: white;
+ padding: 6px;
+ padding-left: 14px;
+ margin-top: 10px;
+ font-size: 14px;
+ text-transform: uppercase;
+ transition: all 300ms ease;
+}
 
+
+nav ul li ul li:hover{
+    background-color: blue;
+    color: white;
+    transform: scale(1.1);
+    padding-left: 30px;
+    font-size: 14px;
+    box-shadow:0px 0px 10px 0px rgba(0, 0, 0,0.5);
+}
 
 
 
