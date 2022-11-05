@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import styles from './navbar.module.css'
-import lupa from "../../img/lupa.png"
+import FontAwesomeIcon from '@fortawesome/fontawesome-free'
 
 const NavBar = () => {
 
@@ -52,7 +52,7 @@ const NavBar = () => {
                     </li> */}
                                 {/* <span>{home}</span> */}
                                <input type={'search'} placeholder='Busque un producto'/>
-                                <button>{lupa}</button>
+                                <button><FontAwesomeIcon icon="fa-thin fa-user" /></button>
                             </ul>
                         </nav>
                     </div>
