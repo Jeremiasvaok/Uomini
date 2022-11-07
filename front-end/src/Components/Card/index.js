@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { addToCart, setToken } from "../../Redux/Actions"
-import { Button } from '@material-ui/core'
+
 
 
 
@@ -21,9 +21,9 @@ const Card = ({ name, id, category, season, color, description, price, count, im
                 <h1>{name}</h1>
                 <h1>{price}</h1>
                 <h1>{season}</h1>
-                <Button 
+                <button 
                 type='submit' 
-                onClick={() => handleFavCart(id)}>Fav</Button>
+                onClick={() => handleFavCart(id)}>Fav</button>
             </div>
         </>
     )

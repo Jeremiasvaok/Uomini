@@ -112,6 +112,14 @@ nav ul li ul li:hover{
  text-align: center;
 }
 
+.search_product{
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 15px;
+    border-radius: 12px;
+    border: none;
+
+}
 
 
 

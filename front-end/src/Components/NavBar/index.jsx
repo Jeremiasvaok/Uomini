@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import styles from './navbar.module.css'
-import FontAwesomeIcon from '@fortawesome/fontawesome-free'
+// import FontAwesomeIcon from '@fortawesome/fontawesome-free'
+import {AccountCircleIcon} from '@mui/icons-material';
 
 const NavBar = () => {
 
@@ -44,15 +45,15 @@ const NavBar = () => {
                                 </li>
 
                                 {/* <li><Link to='/carro'>Carro</Link>
-                    <ul>
-                    <li><a href='#'>SubMenu</a></li>
-                    <li><a href='#'>SubMenu</a></li>
-                    <li><a href='#'>SubMenu</a></li>
-                    </ul>
-                    </li> */}
+                                <ul>
+                                <li><a href='#'>SubMenu</a></li>
+                                <li><a href='#'>SubMenu</a></li>
+                                <li><a href='#'>SubMenu</a></li>
+                                </ul>
+                                </li> */}
                                 {/* <span>{home}</span> */}
-                               <input type={'search'} placeholder='Busque un producto'/>
-                                <button><FontAwesomeIcon icon="fa-thin fa-user" /></button>
+                               <input className={styles.search_product} type={'search'} placeholder='Busque un producto'/>
+                                <button><AccountCircleIcon color="primary" /></button> 
                             </ul>
                         </nav>
                     </div>
