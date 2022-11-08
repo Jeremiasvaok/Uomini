@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styles from './navbar.module.css'
 // import FontAwesomeIcon from '@fortawesome/fontawesome-free'
-import {AccountCircleIcon} from '@mui/icons-material';
+ import { SearchTwoTone}  from '@mui/icons-material';
 
 const NavBar = () => {
 
@@ -24,7 +24,7 @@ const NavBar = () => {
                                     <ul>
                                         <li><a href='#'>SubMenu</a></li>
                                         <li><a href='#'>SubMenu</a></li>
-                                        <li><a href='#'>SubMenu</a></li>
+                                        <li><a href='#'>SubMenu</a></li> 
                                     </ul>
                                 </li>
 
@@ -52,9 +52,11 @@ const NavBar = () => {
                                 </ul>
                                 </li> */}
                                 {/* <span>{home}</span> */}
-                               <input className={styles.search_product} type={'search'} placeholder='Busque un producto'/>
-                                <button><AccountCircleIcon color="primary" /></button> 
+                               <input  className={styles.search_product} type={'search'} placeholder='Busque un producto'/>
+                                 <button className={styles.search_button}><SearchTwoTone /></button>  
                             </ul>
+                            
+
                         </nav>
                     </div>
                 </div>
