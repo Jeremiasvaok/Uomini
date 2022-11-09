@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
+import SearchBar from '../SearchBar'
 import styles from './navbar.module.css'
+
 // import FontAwesomeIcon from '@fortawesome/fontawesome-free'
- import { SearchTwoTone}  from '@mui/icons-material';
+//  import { SearchTwoTone}  from '@mui/icons-material';
 
 const NavBar = () => {
 
@@ -51,9 +53,7 @@ const NavBar = () => {
                                 <li><a href='#'>SubMenu</a></li>
                                 </ul>
                                 </li> */}
-                                {/* <span>{home}</span> */}
-                               <input  className={styles.search_product} type={'search'} placeholder='Busque un producto'/>
-                                 <button className={styles.search_button}><SearchTwoTone /></button>  
+                           <SearchBar  />
                             </ul>
                             
 

@@ -93,23 +93,6 @@ module.exports = {
 
  getRemeras: async (req,res)=>{
   try {
-    const authorization = req.get('authorization')
-    if (!authorization) {
-      return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
-    }// ['bearer', 'shygsxjsgxyscyuheyf8hfuhcb'
-    if (authorization.split(' ')[0].toLowerCase() !== 'bearer') {// bearer zxaUHUHU. este if esta verificando que exista el bearer
-      return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
-    }
-    const token = authorization.substring(7)//esta costante va a contener el token, el token principalmente es asi bearer jdsiijyVGVG, Y CON EL SUBSTRING(7) saca a bearer y deja el token solo
-    const data = getTokenData(token) // le mandatmos a la funcion getTokenData el token que nos pasaron eso nos va a responder con la data o un error 
-    // console.log(data)
-    if (!data) {
-      return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
-    }
-    const user = await User.findById(data.id) //si nos manda un token no valido  hacemos una verificacion si existe algun usuario con el id 
-    if (!user) {
-      return res.status(404).json({ message: 'No se ha encontrado usuario' })
-    }
     const findRemera = await Products.find({"category": "remeras"})
     const findMap = findRemera.map((p) => {
       return {

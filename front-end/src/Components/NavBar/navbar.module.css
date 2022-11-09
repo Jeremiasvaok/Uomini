@@ -121,7 +121,9 @@ nav ul li ul li:hover{
 
 }
 .search_button{
-    position: absolute;
+ 
+    margin-top: 15px;
+    margin-bottom: 15px;
     background-color: red;
 }
 

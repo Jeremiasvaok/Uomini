@@ -6,10 +6,11 @@ import {
   GET_DETAIL,
   ADD_TO_CART,
   DELETE_CART,
-  REMOVE_ALL_FROM_CART,
+ // REMOVE_ALL_FROM_CART,
   GET_ALL_PRODUCTS,
   GET_FAVORITES,
-  SIGNIN_ADMIN
+  SIGNIN_ADMIN,
+  SEARCH_PRODUCT,
 } from '../Actions'
 
 const initialState = {
@@ -61,7 +62,7 @@ function rootReducer(state = initialState, action) {
     case ADD_TO_CART:
         return{
           ...state,
-          cart: console.log(action.payload)
+          cart: action.payload
         }
     // case REMOVE_ALL_FROM_CART:
     //   return {
@@ -69,6 +70,11 @@ function rootReducer(state = initialState, action) {
     //     cart: state.cart.find((item) => item.id !== action.payload)
 
     //   }
+    case SEARCH_PRODUCT:
+      return{
+        ...state,
+        getAllProduct: action.payload
+      }
     case DELETE_CART:
       return {
         ...state,

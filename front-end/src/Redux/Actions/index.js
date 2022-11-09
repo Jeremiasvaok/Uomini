@@ -11,6 +11,7 @@ export const REMOVE_ALL_FROM_CART = 'REMOVE_ALL_FROM_CART'
 export const DELETE_CART = 'DELETE_CART'
 export const GET_FAVORITES = 'GET_FAVORITES'
 export const SIGNIN_ADMIN = 'SIGNIN_ADMIN'
+export const SEARCH_PRODUCT = 'SEARCH_PRODUCT'
 
 
 const instance = axios.create({
@@ -77,24 +78,28 @@ export const getDetails = (id) => async (dispatch) => {
 }
 
 export const getFavorites = () => async(dispatch) =>{
+  try{
   const config = {
     headers : { Authorization: token },
   }
 
    const response = await instance.get('/favorites/products', config)
-   console.log(response)
+   console.log(response.data)
    return dispatch({
     type: GET_FAVORITES,
     payload: response.data
    })
+  }catch(error){
+    alert(error)
+  }
 }
 
-export const addToCart = (id, userToken) => async(dispatch) => {
+export const addToCart = (id) => async(dispatch) => {
   try {
-  let options= {
-    headers :{ Authorization: `bearer ${userToken}` },
+  const config= {
+    headers :{ Authorization: token},
   }
-  const {response} = await instance.post(`/product/favorite/${id}`, options)
+  const response = await instance.post(`/product/favorite/${id}`, config)
   console.log(response.data)
   return dispatch({
     type: ADD_TO_CART,
@@ -103,8 +108,7 @@ export const addToCart = (id, userToken) => async(dispatch) => {
   
 } catch (error) {
   alert(error)
- console.log(error)
-  
+  console.log(error)
 }
 }
 
@@ -144,6 +148,14 @@ export const signInAdmin = ( data) => async(dispatch) =>{
   const response = await instance.post('/signin/admin', data)
   return dispatch({
     type: SIGNIN_ADMIN,
+    payload: response.data
+  })
+}
+
+export const searchProduct = (name) => async(dispach)=>{
+  const response = await instance.get(`/category-products?name=${name}`)
+  return dispach({
+    type: SEARCH_PRODUCT,
     payload: response.data
   })
 }
