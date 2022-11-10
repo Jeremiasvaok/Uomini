@@ -67,7 +67,7 @@ routes.get('/query/user', queryUser)
 
 /************************************************** |RUTAS PARA PRODUCTOS FAVORITOS | **************************************************/
 routes.get('/favorites/products', getFavorites)
-routes.post('/product/favorite/:idproducts', newFavorite)
+routes.post('/product/favorite/:id', newFavorite)
 routes.delete('/productos/favorites/dalete/:idProducts', deleteFavorites)
 // routes.delete('/clear/all', clearAllFavorites)
 

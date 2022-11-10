@@ -80,9 +80,12 @@ export const getDetails = (id) => async (dispatch) => {
 export const getFavorites = () => async(dispatch) =>{
   try{
   const config = {
-    headers : { Authorization: token },
+    data:'hijo de puta',
+    headers : { 
+      Authorization: token,
+      ContentType:"application/json",
+    },
   }
-
    const response = await instance.get('/favorites/products', config)
    console.log(response.data)
    return dispatch({
@@ -91,15 +94,19 @@ export const getFavorites = () => async(dispatch) =>{
    })
   }catch(error){
     alert(error)
+    console.log(error)
   }
 }
 
 export const addToCart = (id) => async(dispatch) => {
   try {
-  const config= {
-    headers :{ Authorization: token},
-  }
-  const response = await instance.post(`/product/favorite/${id}`, config)
+  // const config= {
+  //   data:'hijo de puta',
+  //   headers : { Authorization: token },
+  // }
+  const response = await instance.post(`/product/favorite/${id}`, { 
+    headers : { Authorization: token },
+})
   console.log(response.data)
   return dispatch({
     type: ADD_TO_CART,
@@ -111,7 +118,7 @@ export const addToCart = (id) => async(dispatch) => {
   console.log(error)
 }
 }
-
+ addToCart()
 // export const deleteFromCart = (id, ) => (dispatch) => {
 //   all ?
 //     dispatch({

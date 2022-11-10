@@ -5,7 +5,7 @@ module.exports = {
 
     newFavorite: async (req, res) => {
         try {
-            const { idproducts } = req.params
+            const { id } = req.params
             const authorization = req.get('authorization')
             if(!authorization){
                 return res.status(401).json({message: 'No tienes permiso para hacer estoLL'})
@@ -13,7 +13,7 @@ module.exports = {
             if(authorization.split(' ')[0].toLowerCase()  !== 'bearer'){
                 return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
-            const token = authorization.split(' ')[1]
+            const token = authorization.substring(7)
             const data = getTokenData(token)
             if(!data){
                 return res.status(401).json(' No tienes permiso para hacer esto')
@@ -26,27 +26,27 @@ module.exports = {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
             console.log(user.favorites)
-            if (!idproducts.length || !idproducts) {
+            if (!id.length || !id) {
                 return res.json({ msg: 'No se encontro un producto' })
             }
             if (!user.favorites) {
-                user.favorites = [idproducts]
+                user.favorites = [id]
                 await user.save()
                 let userUpdate = await user.populate('favorites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
                 return res.json({ msg: 'se ha guardado con exito'/*, favs: userUpdate.favourites*/ })
             }
 
-            const existente = user.favorites.includes(idproducts)
+            const existente = user.favorites.includes(id)
 
             if (existente) {
                 return res.json({ msg: 'Este item ya está en favoritos' })
             }
 
-            user.favorites = [...user.favorites, idproducts]
+            user.favorites = [...user.favorites, id]
             await user.save()
             let userUpdate = await user.populate('favorites', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
             console.log(userUpdate)
-            return res.json({ msg: 'Se guardo con exito', favs: userUpdate.favourites})
+            return res.json({ msg: 'Se guardo con exito' /*, favs: userUpdate.favourites*/})
 
         } catch (error) {
             console.log(error)

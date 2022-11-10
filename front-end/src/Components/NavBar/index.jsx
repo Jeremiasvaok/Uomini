@@ -58,6 +58,7 @@ const NavBar = () => {
                             
 
                         </nav>
+                        <Link to='/carro'>Carro</Link>
                     </div>
                 </div>
             </header>

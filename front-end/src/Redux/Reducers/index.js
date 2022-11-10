@@ -73,7 +73,11 @@ function rootReducer(state = initialState, action) {
     case SEARCH_PRODUCT:
       return{
         ...state,
-        getAllProduct: action.payload
+        getAllProduct: action.payload,
+        getAbrigos: action.payload,
+        getCamisas: action.payload,
+        getRemeras: action.payload,
+        getPantalones: action.payload,
       }
     case DELETE_CART:
       return {
