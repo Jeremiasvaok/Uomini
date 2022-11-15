@@ -7,6 +7,7 @@ import Remeras from './Components/Products/Remeras'
 import Details from './Components/Details'
 import MapFavorite from './Components/SoppingCart/mapFavorite.js'
 import SignIn from './Components/From';
+import AllProducts from './Components/Products/allProduct';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
        <Route exact path='/details/:detailsId' element={<Details/>} />
        <Route exact path='/signIn' element={<SignIn/>} />
        <Route exact path='/carro' element={<MapFavorite />} />
+       <Route exact path='/search' element={<AllProducts />} />
     </Routes>
     </div>
   );

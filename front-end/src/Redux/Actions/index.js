@@ -160,11 +160,16 @@ export const signInAdmin = ( data) => async(dispatch) =>{
 }
 
 export const searchProduct = (name) => async(dispach)=>{
+  try{
   const response = await instance.get(`/category-products?name=${name}`)
+  console.log(response.data)
   return dispach({
     type: SEARCH_PRODUCT,
     payload: response.data
   })
+}catch(error){
+  console.log(error)
+}
 }
 
 // setToken()

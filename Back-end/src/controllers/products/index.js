@@ -154,7 +154,7 @@ module.exports = {
       })
       const { name } = req.query
       if (name) {
-        const info = findMap.filter((d) => d.name.toLowerCase().includes(name.toLowerCase()) || d.category.toLowerCase().includes(name.toLowerCase()))
+        const info = findMap.filter((d) => d.name.toLowerCase().includes(name.toLowerCase()))
         info.length ? res.status(200).send(info) :
           res.status(404).send('Producto no encontrado')
       } else {

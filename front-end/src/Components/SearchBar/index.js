@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from 'react-redux'
+import { useHref } from "react-router-dom";
 import { searchProduct } from "../../Redux/Actions";
 
 export default function SearchBar(){
@@ -13,6 +14,7 @@ export default function SearchBar(){
            }
             e.preventDefault();
             dispatch(searchProduct(input))
+            useHref
             setInput("")
         }
     const handleChange = e =>{
@@ -23,7 +25,6 @@ export default function SearchBar(){
     <div >
         <form onSubmit={handleSubmit}>
             <input
-             
              type={'text'}
              placeholder={'Busca un producto'}
              value={input}
