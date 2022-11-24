@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector} from 'react-redux'
 import NavBar from '../NavBar'
-import { getProducts } from '../../Redux/Actions'
+import { Link} from 'react-router-dom'
 import imagenNeon from '../../img/pantalon.png'
 import styles from './home.module.css'
 
@@ -12,7 +10,7 @@ const Landing = ()=>{
             <NavBar/>
         </div>
         <div>
-            <img className={styles.imagePant} src={imagenNeon} alt='pantalon'/>
+            <Link to='/pantalones'><img className={styles.imagePant} src={imagenNeon} alt='pantalon'/></Link>
         </div>
 
         </>

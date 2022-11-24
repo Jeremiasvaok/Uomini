@@ -8,15 +8,16 @@ import Details from './Components/Details'
 import MapFavorite from './Components/SoppingCart/mapFavorite.js'
 import SignIn from './Components/From';
 import AllProducts from './Components/Products/allProduct';
+import NavBar from './Components/NavBar';
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <NavBar />
       <hr/>
       <hr />
       <Routes>
-       {/* <Route exact path='/' element /> */}
+        <Route exact path='/' element={<Home />} /> 
        <Route exact path='/remeras' element={<Remeras />} />
        <Route exact path='/pantalones' element={<Pantalones />}/>
        <Route exact path='/abrigos' element={<Abrigos />} />
