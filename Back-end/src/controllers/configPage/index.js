@@ -52,21 +52,19 @@ module.exports = {
             const { id } = req.params
             const authorization = req.get('authorization')
             if(!authorization){
-                return res.status(401).json({message: 'No tienes permiso para hacer estoLL'})
+                return res.status(401).json({message: 'No tienes permiso para hacer esto'})
             }
-            if(authorization.split(' ')[0].toLowerCase()  !== 'bearer'){
+            if(authorization.split(' ')[0].toLowerCase() !== 'bearer'){
                 return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
             const token = authorization.substring(7)
             const data = getTokenData(token)
-            console.log(data)
             if(!data){
                 return res.status(401).json(' No tienes permiso para hacer esto')
             }
             const user = await User.findById(data.id).populate('new', {
                 name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
             })
-            console.log(user)
             if (!user) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
@@ -145,7 +143,7 @@ module.exports = {
             const token = authorization.split(' ')[1]
             const data = getTokenData(token)
             if(!data){
-                return res.status(401).json(' No tienes permiso para hacer esto')
+                return res.status(401).json('No tienes permiso para hacer esto')
             }
             const user = await User.findById(data.id).populate('new', {
                 name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
