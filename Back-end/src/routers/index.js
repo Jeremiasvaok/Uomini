@@ -37,6 +37,12 @@ const {
     // clearAllFavorites
 } = require('../controllers/favorites')
 
+const {
+    getNovedad,
+    deleteNovedad,
+    newNovedad,
+} = require('../controllers/configPage')
+
 /************************************************** |RUTAS DE PRODUCTOS Y ORDENAMIENTOS| **************************************************/
 routes.get('/products', getAllProducts)
 routes.get('/camisas', getCamisas)
@@ -70,5 +76,10 @@ routes.get('/favorites/products', getFavorites)
 routes.post('/product/favorite/:id', newFavorite)
 routes.delete('/productos/favorites/dalete/:idProducts', deleteFavorites)
 // routes.delete('/clear/all', clearAllFavorites)
+
+/************************************************** |RUTAS PARA PRODUCTOS EN NOVEDAD | **************************************************/
+routes.get('/news/products',getNovedad)
+routes.post('/new/novedad', newNovedad)
+routes.delete('/delete/novedad', deleteNovedad)
 
 module.exports = routes

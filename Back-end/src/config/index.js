@@ -29,7 +29,7 @@ const isAdmin = async(tokenid)=>{
          console.log('No existe ese usuario')
       }
       const role = await Roles.find({_id : {$in:user.roles}})
-      //console.log(role)
+      console.log(role)
       for(let i = 0; i < role.length; i++){
         if(role[i].name === 'admin'){
             return role
