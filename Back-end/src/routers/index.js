@@ -79,7 +79,7 @@ routes.delete('/productos/favorites/dalete/:idProducts', deleteFavorites)
 
 /************************************************** |RUTAS PARA PRODUCTOS EN NOVEDAD | **************************************************/
 routes.get('/news/products',getNovedad)
-routes.post('/new/novedad', newNovedad)
-routes.delete('/delete/novedad', deleteNovedad)
+routes.post('/new/novedad/:id', newNovedad)
+routes.delete('/delete/novedad/:idProducts', deleteNovedad)
 
 module.exports = routes

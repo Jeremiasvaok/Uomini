@@ -36,6 +36,11 @@ const userSchema = new Schema({
         required: true,
         default: false
     },
+    new:{
+        ref:'product',
+        type: Schema.Types.ObjectId
+    }
+
 })
 
 // cifrar contrasrña

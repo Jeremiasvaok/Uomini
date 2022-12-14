@@ -51,55 +51,47 @@ module.exports = {
         try {
             const { id } = req.params
             const authorization = req.get('authorization')
-            if (!authorization) {
-                return res.status(401).json({ message: 'No tienes permiso para hacer esto' })
+            if(!authorization){
+                return res.status(401).json({message: 'No tienes permiso para hacer estoLL'})
             }
-            if (authorization.split(' ')[0].toLowerCase() !== 'bearer') {
-                return res.status(401).json({ message: 'No tienes perimiso para hacer esto' })
+            if(authorization.split(' ')[0].toLowerCase()  !== 'bearer'){
+                return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
             const token = authorization.substring(7)
             const data = getTokenData(token)
-            if (!data) {
+            console.log(data)
+            if(!data){
                 return res.status(401).json(' No tienes permiso para hacer esto')
             }
-
-            const dataTwo = await isAdmin(data.id)
-            try {
-                const infoName = dataTwo.map((role) => role.name)
-                if (infoName[0] !== 'admin') return res.status(403)
-            } catch (error) {
-                return res.status(403).send('Necesitas ser administrador para crear un producto')
-            }
-
-            const user = await User.findById(data.id).populate('favorites', {
+            const user = await User.findById(data.id).populate('new', {
                 name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
             })
             console.log(user)
             if (!user) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            console.log(Page.news)
+            console.log(user.new)
             if (!id.length || !id) {
                 return res.json({ msg: 'No se encontro un producto' })
             }
-            if (!Page.news) {
-                Page.news = [id]
-                await Page.save()
-                let userUpdate = await Page.populate('news', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
+            if (!user.new) {
+                user.new = [id]
+                await user.save()
+                let userUpdate = await user.populate('new', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
                 return res.json({ msg: 'se ha guardado con exito'/*, favs: userUpdate.favourites*/ })
             }
 
-            const existente = Page.news.includes(id)
+            const existente = user.new.includes(id)
 
             if (existente) {
                 return res.json({ msg: 'Este item ya está en favoritos' })
             }
 
-            Page.news = [...Page.news, id]
-            await Page.save()
-            let userUpdate = await Page.populate('news', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
+            user.new = [...user.new, id]
+            await user.save()
+            let userUpdate = await user.populate('new', { name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1 })
             console.log(userUpdate)
-            return res.json({ msg: 'Se guardo con exito' /*, favs: userUpdate.favourites*/ })
+            return res.json({ msg: 'Se guardo con exito' /*, favs: userUpdate.favourites*/})
 
         } catch (error) {
             console.log(error)
@@ -113,7 +105,7 @@ module.exports = {
             if (!authorization) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            if (authorization.split(' ')[0].toLowerCase() !== 'bearer') {
+            if (authorization.split(' ')[0].toLowerCase()  !== 'bearer') {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
             const token = authorization.split(' ')[1]
@@ -121,15 +113,7 @@ module.exports = {
             if (!data) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
-            const dataTwo = await isAdmin(data.id)
-            try {
-                const infoName = dataTwo.map((role) => role.name)
-                if (infoName[0] !== 'admin') return res.status(403)
-            } catch (error) {
-                return res.status(403).send('Necesitas ser administrador para crear un producto')
-            }
-
-            const user = await User.findById(data.id).populate('favorites', {
+            const user = await User.findById(data.id).populate('new', {
                 name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
             })
             console.log(user)
@@ -139,42 +123,41 @@ module.exports = {
             if (!idProducts.length || !idProducts) {
                 return res.json({ msg: 'No se encontro un producto' })
             }
-            const news = Page.news
-            console.log(news)
-            Page.news = news.filter(p => p.id !== idProducts)
-            await Page.save()
-            return res.json({ msg: 'Producto eliminado con exito', favs: Page.news })
+            const favoritos = user.new
+            console.log(favoritos)
+            user.new = favoritos.filter(p => p.id !== idProducts)
+            await user.save()
+            return res.json({ msg: 'Producto eliminado con exito', favs: user.new })
         } catch (error) {
-            console.log(error)
+       console.log(error)
         }
     },
-
-    getNovedad: async (req, res) => {
+    
+    getNovedad: async(req, res)=>{
         try {
             const authorization = req.get('authorization')
-            if (!authorization) {
-                return res.status(401).json({ message: 'No tienes permiso para hacer estoLL' })
+            if(!authorization){
+                return res.status(401).json({message: 'No tienes permiso para hacer esto'})
             }
-            if (authorization.split(' ')[0].toLowerCase() !== 'bearer') {
-                return res.status(401).json({ message: 'No tienes perimiso para hacer esto' })
+            if(authorization.split(' ')[0].toLowerCase() !== 'bearer'){
+                return res.status(401).json({message: 'No tienes perimiso para hacer esto'})
             }
             const token = authorization.split(' ')[1]
             const data = getTokenData(token)
-            if (!data) {
+            if(!data){
                 return res.status(401).json(' No tienes permiso para hacer esto')
             }
-            const user = await User.findById(data.id).populate('favorites', {
+            const user = await User.findById(data.id).populate('new', {
                 name: 1, description: 1, price: 1, image: 1, category: 1, color: 1, _id: 1
             })
-            console.log(user)
+            //console.log(user)
             if (!user) {
                 return res.status(401).json({ message: 'No tienes permisos para hacer esto' })
             }
 
-            return res.status(200).json(Page.news)
+            return res.status(200).json(user.new)
         } catch (error) {
             console.log(error)
         }
-    }
-
+    },
 }
